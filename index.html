@@ -179,33 +179,34 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div class="summary-insights">
       <div class="insight">
         <div class="insight-icon">🤖</div>
-        <div class="insight-heading">Роверы вызывают самые сильные эмоции</div>
+        <div class="insight-heading">Роверы — абсолютный лидер позитива</div>
         <div class="insight-text">
-          9 постов про роверов набирают до 3.6M просмотров. Люди плачут когда ровер уезжает,
-          сравнивают с Валли из Pixar, помогают выбраться из сугробов.
-          Иностранные блогеры снимают контраст: в России роверам помогают, в США — ломают.
+          10 постов, самая частая тема среза. Бабушки помогают роверу залезть на бордюр,
+          мальчик оставляет ему чаевые из копилки, девушка плачет когда ровер уезжает.
+          Иностранцы сравнивают: в России роверам помогают, в США — ломают. Тема объединяет людей.
         </div>
-        <span class="insight-stat orange">9 постов · до 3.6M</span>
+        <span class="insight-stat orange">10 постов · 82–98% позитив</span>
       </div>
       <div class="insight">
-        <div class="insight-icon">🎵</div>
-        <div class="insight-heading">Яндекс Go и Еда — живые истории</div>
+        <div class="insight-icon">🚕</div>
+        <div class="insight-heading">Яндекс Go — неожиданные моменты в поездке</div>
         <div class="insight-text">
-          Водитель с чупа-чупсами для детей, курьер-певец из Беларуси, подросток в первом рейсе —
-          контент про людей внутри сервиса собирает самые высокие лайки (до 321K).
-          Аудитория реагирует на личные истории.
+          6 постов с высоким охватом. Водитель загадывает загадку и дарит чупа-чупсы,
+          парень генерит песню про таксиста прямо в поездке, девушка снимает милый диалог про шарик.
+          Pet-friendly тариф вызвал лавину благодарностей. Личные истории работают лучше всего.
         </div>
-        <span class="insight-stat green">11 постов · 585K лайков</span>
+        <span class="insight-stat green">6 постов · до 2.7M просмотров</span>
       </div>
       <div class="insight">
         <div class="insight-icon">🔊</div>
-        <div class="insight-heading">Алиса и Браузер — вирусные пасхалки</div>
+        <div class="insight-heading">Алиса и Браузер — вирусные открытия</div>
         <div class="insight-text">
-          Ролики про Алису (бабушка с деменцией, колонки «разговаривают» друг с другом)
-          собирают лавину личных историй в комментах. Пасхалки Яндекс Браузера стабильно
-          вирусятся — Пухосос залипает аудиторию на сотни секунд.
+          Алиса убаюкивает котёнка, помогает бабушке с деменцией, крепится к стене —
+          каждый ролик запускает волну личных историй в комментах.
+          Пасхалки Браузера (Пухосос, игра «любит не любит») стабильно вирусятся —
+          97% позитив в комментариях.
         </div>
-        <span class="insight-stat blue">6 постов · 76% позитив</span>
+        <span class="insight-stat blue">6 постов · 90–97% позитив</span>
       </div>
     </div>
   </div>
@@ -249,14 +250,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 <script>
 const THEMES = [
-  ["Ровер Яндекса", 9],
-  ["Яндекс Go", 6],
-  ["Яндекс Еда", 5],
+  ["Ровер / робот-доставщик", 10],
+  ["Яндекс Go — такси", 6],
   ["Яндекс Музыка", 3],
   ["Яндекс Браузер", 3],
   ["Яндекс Карты", 3],
-  ["Алиса", 3],
-  ["Соцпроекты", 2],
+  ["Яндекс Алиса", 3],
+  ["Яндекс — инклюзивность", 1],
   ["Яндекс Мессенджер", 1],
   ["Яндекс Маркет", 1],
 ];
@@ -270,16 +270,16 @@ const WORDS = [
 ];
 
 const TOP_POSTS = [
-  { a:"lara__vo__",       v:3646708, l:148843, th:"Яндекс Go — водитель с шариком",               p:"78%", url:"https://www.instagram.com/reel/DZXPfBvs5VP/" },
-  { a:"hosti_music_",     v:2736023, l:263481, th:"Яндекс Go — трогательная реакция водителя",     p:"82%", url:"https://www.instagram.com/reel/DZa4izToELF/" },
-  { a:"holod.media",      v:1957927, l:321771, th:"Яндекс Еда — курьер исполнил мечту о музыке",   p:"75%", url:"https://www.instagram.com/reel/DbXs3ESt-z2/" },
-  { a:"new__kuzya",       v:1833566, l:130231, th:"Алиса как компаньон для бабушки с деменцией",   p:"88%", url:"https://www.instagram.com/reel/DXeosQODVMD/" },
-  { a:"kate_krygina",     v:1369187, l:28798,  th:"Яндекс Браузер — пасхалка Пухосос",            p:"80%", url:"https://www.instagram.com/reel/DZZeov6u9dL/" },
-  { a:"sasha.strelkina",  v:648156,  l:64757,  th:"Ровер Яндекс Лавки — «сделайте менее милыми»", p:"76%", url:"https://www.instagram.com/reel/DbXmczcI0Cb/" },
-  { a:"almira.rabatovna", v:676926,  l:59967,  th:"Яндекс Go — водитель с чупа-чупсами",          p:"70%", url:"https://www.instagram.com/reel/DZ9tqNKoH9p/" },
-  { a:"vlastify",         v:514933,  l:284404, th:"Ровер Яндекса — Россия помогает роботам",       p:"85%", url:"https://www.instagram.com/reel/Da0MciUMRND/" },
-  { a:"sasha_travelova",  v:604262,  l:17534,  th:"Яндекс Доставка — подросток в первом рейсе",   p:"72%", url:"https://www.instagram.com/reel/Dbc_k7pNJEv/" },
-  { a:"la_capital_de_oro",v:152090,  l:348083, th:"Ровер Яндекса глазами иностранца",              p:"80%", url:"https://www.instagram.com/reel/DayOuCOK6G-/" },
+  { a:"berisvoye",        v:5900000, l:21236,  th:"Девушка помогает роверу выбраться из снега",       p:"80%", url:"https://www.instagram.com/reel/DV1CNWcDOp8/" },
+  { a:"lara__vo__",       v:3646708, l:148843, th:"Приятная поездка и милый диалог с таксистом",      p:"68%", url:"https://www.instagram.com/reel/DZXPfBvs5VP/" },
+  { a:"hosti_music_",     v:2736023, l:263481, th:"Парень генерит песню про таксиста прямо в поездке", p:"22%", url:"https://www.instagram.com/reel/DZa4izToELF/" },
+  { a:"new__kuzya",       v:1833566, l:130231, th:"Алиса помогает бабушке с деменцией",               p:"90%", url:"https://www.instagram.com/reel/DXeosQODVMD/" },
+  { a:"kate_krygina",     v:1369187, l:28798,  th:"Пухосос в Яндекс Браузере",                        p:"77%", url:"https://www.instagram.com/reel/DZZeov6u9dL/" },
+  { a:"druzhinina_nail",  v:1400000, l:45190,  th:"Ребёнок оставил чаевые роботу-доставщику",         p:"82%", url:"https://www.instagram.com/reel/DT7s-wvDPlP/" },
+  { a:"britoksasha",      v:1200000, l:62863,  th:"Парень предлагает фичи для Яндекс Мессенджера",    p:"55%", url:"https://www.instagram.com/reel/DUIJ1x4iAXY/" },
+  { a:"almira.rabatovna", v:676926,  l:59967,  th:"Водитель в такси загадал загадку и дал чупа-чупсы", p:"92%", url:"https://www.instagram.com/reel/DZ9tqNKoH9p/" },
+  { a:"vlastify",         v:514933,  l:284404, th:"Роверы: Россия помогает, США — ломают",             p:"78%", url:"https://www.instagram.com/reel/Da0MciUMRND/" },
+  { a:"lera_valeriaaa",   v:0,       l:0,      th:"Колонка Алиса убаюкивает котёнка",                  p:"97%", url:"https://www.instagram.com/reel/DavsIY7RYIf/" },
 ];
 
 const PAL = ['#ff3b30','#ff9f0a','#30d158','#007aff','#5856d6','#ff2d55','#ac8e68','#34c759','#5ac8fa','#af52de'];
