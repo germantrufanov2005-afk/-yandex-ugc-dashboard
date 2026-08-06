@@ -9,6 +9,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f2f2f7; color: #1d1d1f; }
 
+/* ── Header ── */
 .header {
   background: #fff; border-bottom: 1px solid #e5e5ea;
   padding: 16px 32px; display: flex; align-items: center;
@@ -19,26 +20,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .header-sub { font-size: 12px; color: #8e8e93; margin-top: 2px; }
 .sheets-btn {
   font-size: 13px; color: #007aff; text-decoration: none; font-weight: 500;
-  border: 1.5px solid #007aff; padding: 7px 18px; border-radius: 20px;
-  transition: all .15s;
+  border: 1.5px solid #007aff; padding: 7px 18px; border-radius: 20px; transition: all .15s;
 }
 .sheets-btn:hover { background: #007aff; color: #fff; }
 
-.tabs {
-  background: #fff; border-bottom: 1px solid #e5e5ea;
-  display: flex; padding: 0 32px;
-}
+/* ── Tabs ── */
+.tabs { background: #fff; border-bottom: 1px solid #e5e5ea; display: flex; padding: 0 32px; }
 .tab {
   padding: 12px 22px; font-size: 14px; font-weight: 500;
-  cursor: pointer; border-bottom: 2.5px solid transparent;
-  color: #8e8e93; transition: all .15s;
+  cursor: pointer; border-bottom: 2.5px solid transparent; color: #8e8e93; transition: all .15s;
 }
 .tab.active { color: #1d1d1f; border-bottom-color: #ff3b30; }
 
 .page { display: none; padding: 28px 32px; max-width: 1140px; margin: 0 auto; }
 .page.active { display: block; }
 
-/* Stats */
+/* ── Stats ── */
 .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
 .stat { background: #fff; border-radius: 14px; padding: 18px 20px; border: 1px solid #e5e5ea; }
 .stat-label { font-size: 11px; color: #8e8e93; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
@@ -50,53 +47,69 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .bar { height: 5px; border-radius: 3px; margin-top: 9px;
   background: linear-gradient(to right, #30d158 76%, #ffcc00 22%, #ff3b30 2%); }
 
-/* Summary */
+/* ── Summary ── */
 .summary {
-  background: #1c1c1e; color: #f2f2f7;
-  border-radius: 14px; padding: 22px 26px; margin-bottom: 20px;
+  border-radius: 16px; margin-bottom: 20px; overflow: hidden;
+  background: #1c1c1e;
 }
-.summary-label { font-size: 10px; text-transform: uppercase; letter-spacing: .7px; color: #636366; margin-bottom: 10px; }
-.summary-text { font-size: 14px; line-height: 1.7; }
-.summary-text strong { color: #fff; }
+.summary-header {
+  padding: 18px 24px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid #2c2c2e;
+}
+.summary-title { font-size: 13px; font-weight: 600; color: #fff; }
+.summary-date { font-size: 12px; color: #636366; }
+.summary-insights { display: grid; grid-template-columns: repeat(3,1fr); }
+.insight {
+  padding: 18px 24px; border-right: 1px solid #2c2c2e;
+  transition: background .15s;
+}
+.insight:last-child { border-right: none; }
+.insight:hover { background: #242426; }
+.insight-icon { font-size: 24px; margin-bottom: 10px; }
+.insight-heading { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.insight-text { font-size: 12px; line-height: 1.6; color: #aeaeb2; }
+.insight-stat {
+  display: inline-block; margin-top: 10px;
+  background: #2c2c2e; color: #fff; font-size: 11px; font-weight: 600;
+  padding: 4px 10px; border-radius: 8px;
+}
+.insight-stat.green { background: #1a3a24; color: #30d158; }
+.insight-stat.orange { background: #3a2a10; color: #ff9f0a; }
+.insight-stat.blue { background: #0d2a3d; color: #5ac8fa; }
+.insight-stat.pink { background: #3a1020; color: #ff2d55; }
 
-/* Charts */
+/* ── Two col ── */
 .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 20px; }
 .card { background: #fff; border-radius: 14px; padding: 22px 24px; border: 1px solid #e5e5ea; }
 .card-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; }
 
-/* Comments */
-.comments-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.comment-item {
-  border: 1px solid #e5e5ea; border-radius: 12px; padding: 14px 16px;
-  display: flex; gap: 12px; align-items: flex-start; background: #fff;
+/* ── Word cloud ── */
+.wordcloud { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 0; }
+.word {
+  padding: 5px 13px; border-radius: 20px; cursor: default;
+  background: #f2f2f7; color: #1d1d1f; font-weight: 500; transition: transform .15s;
 }
-.c-likes { flex-shrink: 0; text-align: center; min-width: 32px; }
-.c-heart { font-size: 14px; }
-.c-num { font-size: 12px; font-weight: 700; color: #ff3b30; display: block; margin-top: 1px; }
-.c-text { font-size: 13px; line-height: 1.5; margin-bottom: 5px; }
-.c-meta { font-size: 11px; color: #8e8e93; }
-.c-badge {
-  display: inline-block; background: #f2f2f7; color: #3c3c43;
-  padding: 2px 8px; border-radius: 8px; font-size: 10px; font-weight: 500; margin-left: 5px;
-}
+.word:hover { transform: scale(1.05); }
+.word.s1 { font-size: 11px; opacity: .55; }
+.word.s2 { font-size: 13px; opacity: .7; }
+.word.s3 { font-size: 15px; background: #e8f4ff; color: #007aff; }
+.word.s4 { font-size: 18px; font-weight: 700; background: #fff4e0; color: #ff9f0a; }
+.word.s5 { font-size: 22px; font-weight: 800; background: #ffeef0; color: #ff3b30; }
 
-/* Table */
+/* ── Table ── */
 .posts-table { width: 100%; border-collapse: collapse; }
 .posts-table th {
   text-align: left; font-size: 11px; font-weight: 600; color: #8e8e93;
   text-transform: uppercase; letter-spacing: .4px; padding: 0 14px 10px 0;
 }
-.posts-table td {
-  padding: 11px 14px 11px 0; border-top: 1px solid #f2f2f7;
-  font-size: 13px; vertical-align: top;
-}
+.posts-table td { padding: 11px 14px 11px 0; border-top: 1px solid #f2f2f7; font-size: 13px; vertical-align: top; }
 .posts-table tr:hover td { background: #fafafa; }
 .badge { display: inline-block; padding: 3px 9px; border-radius: 9px; font-size: 11px; font-weight: 500; background: #f2f2f7; color: #3c3c43; white-space: nowrap; }
 .link { color: #007aff; text-decoration: none; font-weight: 600; white-space: nowrap; }
 .link:hover { text-decoration: underline; }
 .num { font-weight: 600; }
 .pos { color: #30d158; font-weight: 600; font-size: 12px; }
-
 .full-col { margin-bottom: 20px; }
 
 .footer { text-align: center; padding: 20px; font-size: 12px; color: #8e8e93; border-top: 1px solid #e5e5ea; margin-top: 8px; }
@@ -108,7 +121,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 @media(max-width:768px){
   .stats { grid-template-columns: 1fr 1fr; }
-  .two-col, .comments-grid { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  .summary-insights { grid-template-columns: 1fr; }
+  .insight { border-right: none; border-bottom: 1px solid #2c2c2e; }
   .page, .tabs, .header { padding-left: 16px; padding-right: 16px; }
 }
 </style>
@@ -118,7 +133,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 <header class="header">
   <div>
     <div class="logo"><em>Яндекс</em> UGC Dashboard</div>
-    <div class="header-sub">Мониторинг упоминаний в Instagram</div>
+    <div class="header-sub">Мониторинг упоминаний · Instagram</div>
   </div>
   <a class="sheets-btn" href="https://docs.google.com/spreadsheets/d/1e9G5uRMy7tJjDA-ei_sopeaywB-ZUBvNM3whV7v6_AU" target="_blank">Открыть таблицу →</a>
 </header>
@@ -128,7 +143,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div class="tab" onclick="go('neg')">⚠️ Негатив</div>
 </nav>
 
-<!-- ПОЗИТИВ -->
+<!-- ══════════ ПОЗИТИВ ══════════ -->
 <div id="page-pos" class="page active">
 
   <div class="stats">
@@ -155,41 +170,62 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     </div>
   </div>
 
+  <!-- Сводка -->
   <div class="summary">
-    <div class="summary-label">Сводка среза · 03.08.2026</div>
-    <div class="summary-text">
-      В срезе <strong>36 рилсов</strong> с суммарным охватом <strong>18M+ просмотров</strong>.
-      Самая популярная тема — <strong>роверы Яндекса</strong> (9 постов): люди снимают встречи с роботами на улице,
-      плачут когда те уезжают, помогают выбраться из сугробов. Ролики набирают от 500K до 3.6M просмотров.
-      <strong>Яндекс Go</strong> (6 постов) — вирусные моменты с неожиданными водителями: с шариком, с чупа-чупсами для детей,
-      с трогательной реакцией. <strong>Яндекс Еда</strong> (5 постов) — курьеры с историями: певец, история взросления подростка.
-      <strong>Алиса</strong> (3 поста) — аудитория активно реагирует на ролики про «живые» колонки,
-      пишет что их Алисы тоже «включаются» и «разговаривают». <strong>Яндекс Браузер</strong> (3 поста) —
-      пасхалки с Пухососом стабильно дают вирусный охват.
+    <div class="summary-header">
+      <div class="summary-title">Ключевые инсайты среза</div>
+      <div class="summary-date">03.08.2026 · 36 рилсов · Instagram</div>
+    </div>
+    <div class="summary-insights">
+      <div class="insight">
+        <div class="insight-icon">🤖</div>
+        <div class="insight-heading">Роверы вызывают самые сильные эмоции</div>
+        <div class="insight-text">
+          9 постов про роверов набирают до 3.6M просмотров. Люди плачут когда ровер уезжает,
+          сравнивают с Валли из Pixar, помогают выбраться из сугробов.
+          Иностранные блогеры снимают контраст: в России роверам помогают, в США — ломают.
+        </div>
+        <span class="insight-stat orange">9 постов · до 3.6M</span>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">🎵</div>
+        <div class="insight-heading">Яндекс Go и Еда — живые истории</div>
+        <div class="insight-text">
+          Водитель с чупа-чупсами для детей, курьер-певец из Беларуси, подросток в первом рейсе —
+          контент про людей внутри сервиса собирает самые высокие лайки (до 321K).
+          Аудитория реагирует на личные истории.
+        </div>
+        <span class="insight-stat green">11 постов · 585K лайков</span>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">🔊</div>
+        <div class="insight-heading">Алиса и Браузер — вирусные пасхалки</div>
+        <div class="insight-text">
+          Ролики про Алису (бабушка с деменцией, колонки «разговаривают» друг с другом)
+          собирают лавину личных историй в комментах. Пасхалки Яндекс Браузера стабильно
+          вирусятся — Пухосос залипает аудиторию на сотни секунд.
+        </div>
+        <span class="insight-stat blue">6 постов · 76% позитив</span>
+      </div>
     </div>
   </div>
 
   <div class="two-col">
     <div class="card">
-      <div class="card-title">Темы контента</div>
-      <div style="height:280px;position:relative"><canvas id="themesChart"></canvas></div>
+      <div class="card-title">Распределение по темам</div>
+      <div style="height:290px;position:relative"><canvas id="themesChart"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title">Распределение по тональности</div>
-      <div style="height:280px;position:relative"><canvas id="sentChart"></canvas></div>
+      <div class="card-title">О чём пишут в комментариях</div>
+      <div class="wordcloud" id="wc"></div>
     </div>
-  </div>
-
-  <div class="card full-col">
-    <div class="card-title">Лучшие комментарии (по лайкам)</div>
-    <div class="comments-grid" id="comments-wrap"></div>
   </div>
 
   <div class="card full-col">
     <div class="card-title">Топ постов по охвату</div>
     <table class="posts-table">
       <thead><tr>
-        <th>Автор</th><th>Тема кейса</th><th>Просмотры</th><th>Лайки</th><th>Тональность</th><th>Ссылка</th>
+        <th>Автор</th><th>Кейс</th><th>Просмотры</th><th>Лайки</th><th>Тональность</th><th>Ссылка</th>
       </tr></thead>
       <tbody id="posts-body"></tbody>
     </table>
@@ -197,7 +233,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 </div>
 
-<!-- НЕГАТИВ -->
+<!-- ══════════ НЕГАТИВ ══════════ -->
 <div id="page-neg" class="page">
   <div class="empty">
     <div class="empty-icon">📊</div>
@@ -219,34 +255,31 @@ const THEMES = [
   ["Яндекс Музыка", 3],
   ["Яндекс Браузер", 3],
   ["Яндекс Карты", 3],
-  ["Яндекс Алиса", 3],
-  ["Социальные проекты", 2],
+  ["Алиса", 3],
+  ["Соцпроекты", 2],
   ["Яндекс Мессенджер", 1],
   ["Яндекс Маркет", 1],
 ];
 
-const COMMENTS = [
-  { likes: 6, text: "я узнала вообще не с песни, а благодаря Глебу — Даниил в 2023 году что-то особенное", author: "dkim_real", theme: "Яндекс Музыка" },
-  { likes: 5, text: "Зачем вы заставили меня встать в 2 ночи это проверять 😂", author: "lesyajekson", theme: "Яндекс Алиса" },
-  { likes: 4, text: "Я сейчас пойду проверять, если моя Алиса сломается — ответственность на вас 😅", author: "lesyajekson", theme: "Яндекс Алиса" },
-  { likes: 3, text: "Пока смотрела видео, моя Алиса с вашей разговаривала 😁", author: "new__kuzya", theme: "Яндекс Алиса" },
-  { likes: 2, text: "Моя Алиса начала рассказывать про кошек и сказала, чтоб я шла спать 😂", author: "new__kuzya", theme: "Яндекс Алиса" },
-  { likes: 1, text: "До слёз просто 😭 это так мило 🥺 какой чудесный сынок 😍", author: "druzhinina_nail", theme: "Ровер Яндекса" },
-  { likes: 1, text: "Оказывается у нас есть люди, а не одни суолочи в такси ❤️", author: "malikasvjastins", theme: "Яндекс Go" },
-  { likes: 1, text: "Какой чудесный подарок @yandex.market 🥹", author: "gazizov828", theme: "Яндекс Маркет" },
+const WORDS = [
+  ["алиса", 8], ["спасибо", 5], ["Яндекс", 4], ["работает", 4],
+  ["песни", 4], ["слушаю", 4], ["кометы", 4], ["хорошо", 3],
+  ["талант", 3], ["чудесный", 3], ["проверять", 3], ["круто", 2],
+  ["офигеть", 2], ["красиво", 2], ["момент", 2], ["роботы", 2],
+  ["мило", 2], ["доброта", 2], ["доставка", 2], ["музыка", 2],
 ];
 
 const TOP_POSTS = [
-  { a: "lara__vo__",       v: 3646708, l: 148843, th: "Яндекс Go — водитель с шариком",         p: "78%", url: "https://www.instagram.com/reel/DZXPfBvs5VP/" },
-  { a: "hosti_music_",     v: 2736023, l: 263481, th: "Яндекс Go — трогательная реакция водителя", p: "82%", url: "https://www.instagram.com/reel/DZa4izToELF/" },
-  { a: "holod.media",      v: 1957927, l: 321771, th: "Яндекс Еда — курьер исполнил мечту",     p: "75%", url: "https://www.instagram.com/reel/DbXs3ESt-z2/" },
-  { a: "new__kuzya",       v: 1833566, l: 130231, th: "Алиса как компаньон для бабушки",         p: "88%", url: "https://www.instagram.com/reel/DXeosQODVMD/" },
-  { a: "kate_krygina",     v: 1369187, l: 28798,  th: "Яндекс Браузер — пасхалка Пухосос",      p: "80%", url: "https://www.instagram.com/reel/DZZeov6u9dL/" },
-  { a: "sasha.strelkina",  v: 648156,  l: 64757,  th: "Ровер Яндекс Лавки — «сделайте менее милыми»", p: "76%", url: "https://www.instagram.com/reel/DbXmczcI0Cb/" },
-  { a: "almira.rabatovna", v: 676926,  l: 59967,  th: "Яндекс Go — водитель-философ с чупа-чупсами", p: "70%", url: "https://www.instagram.com/reel/DZ9tqNKoH9p/" },
-  { a: "vlastify",         v: 514933,  l: 284404, th: "Ровер Яндекса — люди помогают роботам",  p: "85%", url: "https://www.instagram.com/reel/Da0MciUMRND/" },
-  { a: "sasha_travelova",  v: 604262,  l: 17534,  th: "Яндекс Доставка — подросток-курьер",     p: "72%", url: "https://www.instagram.com/reel/Dbc_k7pNJEv/" },
-  { a: "la_capital_de_oro",v: 152090,  l: 348083, th: "Ровер Яндекса — Россия vs США",          p: "80%", url: "https://www.instagram.com/reel/DayOuCOK6G-/" },
+  { a:"lara__vo__",       v:3646708, l:148843, th:"Яндекс Go — водитель с шариком",               p:"78%", url:"https://www.instagram.com/reel/DZXPfBvs5VP/" },
+  { a:"hosti_music_",     v:2736023, l:263481, th:"Яндекс Go — трогательная реакция водителя",     p:"82%", url:"https://www.instagram.com/reel/DZa4izToELF/" },
+  { a:"holod.media",      v:1957927, l:321771, th:"Яндекс Еда — курьер исполнил мечту о музыке",   p:"75%", url:"https://www.instagram.com/reel/DbXs3ESt-z2/" },
+  { a:"new__kuzya",       v:1833566, l:130231, th:"Алиса как компаньон для бабушки с деменцией",   p:"88%", url:"https://www.instagram.com/reel/DXeosQODVMD/" },
+  { a:"kate_krygina",     v:1369187, l:28798,  th:"Яндекс Браузер — пасхалка Пухосос",            p:"80%", url:"https://www.instagram.com/reel/DZZeov6u9dL/" },
+  { a:"sasha.strelkina",  v:648156,  l:64757,  th:"Ровер Яндекс Лавки — «сделайте менее милыми»", p:"76%", url:"https://www.instagram.com/reel/DbXmczcI0Cb/" },
+  { a:"almira.rabatovna", v:676926,  l:59967,  th:"Яндекс Go — водитель с чупа-чупсами",          p:"70%", url:"https://www.instagram.com/reel/DZ9tqNKoH9p/" },
+  { a:"vlastify",         v:514933,  l:284404, th:"Ровер Яндекса — Россия помогает роботам",       p:"85%", url:"https://www.instagram.com/reel/Da0MciUMRND/" },
+  { a:"sasha_travelova",  v:604262,  l:17534,  th:"Яндекс Доставка — подросток в первом рейсе",   p:"72%", url:"https://www.instagram.com/reel/Dbc_k7pNJEv/" },
+  { a:"la_capital_de_oro",v:152090,  l:348083, th:"Ровер Яндекса глазами иностранца",              p:"80%", url:"https://www.instagram.com/reel/DayOuCOK6G-/" },
 ];
 
 const PAL = ['#ff3b30','#ff9f0a','#30d158','#007aff','#5856d6','#ff2d55','#ac8e68','#34c759','#5ac8fa','#af52de'];
@@ -262,26 +295,17 @@ new Chart(document.getElementById('themesChart'),{
   type:'bar',
   data:{labels:THEMES.map(t=>t[0]),datasets:[{data:THEMES.map(t=>t[1]),backgroundColor:PAL,borderRadius:6,borderSkipped:false}]},
   options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false}},
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.raw+' постов'}}},
     scales:{x:{grid:{color:'#f2f2f7'},ticks:{stepSize:1}},y:{grid:{display:false},ticks:{font:{size:12}}}}}
 });
 
-// Doughnut
-new Chart(document.getElementById('sentChart'),{
-  type:'doughnut',
-  data:{labels:['Позитив','Нейтрал','Негатив'],datasets:[{data:[76,22,2],backgroundColor:['#30d158','#ffcc00','#ff3b30'],borderWidth:0,hoverOffset:8}]},
-  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
-    plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:13},usePointStyle:true}}}}
-});
-
-// Comments
-const cw = document.getElementById('comments-wrap');
-COMMENTS.forEach(c=>{
-  cw.innerHTML += `<div class="comment-item">
-    <div class="c-likes"><span class="c-heart">❤️</span><span class="c-num">${c.likes}</span></div>
-    <div><div class="c-text">${c.text}</div>
-    <div class="c-meta">@${c.a||c.author}<span class="c-badge">${c.theme}</span></div></div>
-  </div>`;
+// Word cloud
+const wc = document.getElementById('wc');
+const max = WORDS[0][1];
+WORDS.forEach(([w,cnt])=>{
+  const r = cnt/max;
+  const s = r>.8?5:r>.6?4:r>.4?3:r>.25?2:1;
+  wc.innerHTML += `<span class="word s${s}">${w}</span>`;
 });
 
 // Table
