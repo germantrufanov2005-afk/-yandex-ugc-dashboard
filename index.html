@@ -6,166 +6,136 @@
 <title>Яндекс UGC Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f2f2f7; color: #1d1d1f; }
 
-  .header {
-    background: #fff;
-    border-bottom: 1px solid #e5e5ea;
-    padding: 18px 32px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 1px 0 rgba(0,0,0,.06);
-  }
-  .header-left { display: flex; align-items: center; gap: 14px; }
-  .logo { font-size: 20px; font-weight: 700; color: #ff3b30; letter-spacing: -0.5px; }
-  .logo span { color: #1d1d1f; }
-  .subtitle { font-size: 12px; color: #8e8e93; }
-  .sheets-btn {
-    font-size: 13px; color: #007aff; text-decoration: none;
-    border: 1px solid #007aff; padding: 7px 16px; border-radius: 20px;
-    transition: all .15s; font-weight: 500;
-  }
-  .sheets-btn:hover { background: #007aff; color: #fff; }
+.header {
+  background: #fff; border-bottom: 1px solid #e5e5ea;
+  padding: 16px 32px; display: flex; align-items: center;
+  justify-content: space-between; position: sticky; top: 0; z-index: 100;
+}
+.logo { font-size: 18px; font-weight: 700; letter-spacing: -.5px; }
+.logo em { color: #ff3b30; font-style: normal; }
+.header-sub { font-size: 12px; color: #8e8e93; margin-top: 2px; }
+.sheets-btn {
+  font-size: 13px; color: #007aff; text-decoration: none; font-weight: 500;
+  border: 1.5px solid #007aff; padding: 7px 18px; border-radius: 20px;
+  transition: all .15s;
+}
+.sheets-btn:hover { background: #007aff; color: #fff; }
 
-  .tabs {
-    background: #fff; border-bottom: 1px solid #e5e5ea;
-    display: flex; padding: 0 32px; gap: 0;
-  }
-  .tab {
-    padding: 13px 22px; font-size: 14px; font-weight: 500;
-    cursor: pointer; border-bottom: 2px solid transparent;
-    color: #8e8e93; transition: all .15s; user-select: none;
-  }
-  .tab.active { color: #1d1d1f; border-bottom-color: #ff3b30; }
-  .tab:hover:not(.active) { color: #3c3c43; }
+.tabs {
+  background: #fff; border-bottom: 1px solid #e5e5ea;
+  display: flex; padding: 0 32px;
+}
+.tab {
+  padding: 12px 22px; font-size: 14px; font-weight: 500;
+  cursor: pointer; border-bottom: 2.5px solid transparent;
+  color: #8e8e93; transition: all .15s;
+}
+.tab.active { color: #1d1d1f; border-bottom-color: #ff3b30; }
 
-  .page { display: none; padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
-  .page.active { display: block; }
+.page { display: none; padding: 28px 32px; max-width: 1140px; margin: 0 auto; }
+.page.active { display: block; }
 
-  /* Stats row */
-  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; }
-  .stat {
-    background: #fff; border-radius: 14px; padding: 18px 20px;
-    border: 1px solid #e5e5ea;
-  }
-  .stat-label { font-size: 11px; color: #8e8e93; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
-  .stat-val { font-size: 30px; font-weight: 700; letter-spacing: -1px; line-height: 1; }
-  .stat-val.green { color: #30d158; }
-  .stat-val.blue  { color: #007aff; }
-  .stat-val.orange{ color: #ff9f0a; }
-  .stat-sub { font-size: 11px; color: #8e8e93; margin-top: 5px; }
-  .sentiment-bar {
-    height: 6px; border-radius: 3px; margin-top: 8px;
-    background: linear-gradient(to right, #30d158 76%, #ffcc00 22%, #ff3b30 2%);
-  }
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+.stat { background: #fff; border-radius: 14px; padding: 18px 20px; border: 1px solid #e5e5ea; }
+.stat-label { font-size: 11px; color: #8e8e93; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.stat-val { font-size: 28px; font-weight: 700; letter-spacing: -1px; line-height: 1; }
+.stat-val.g { color: #30d158; }
+.stat-val.b { color: #007aff; }
+.stat-val.o { color: #ff9f0a; }
+.stat-sub { font-size: 11px; color: #8e8e93; margin-top: 4px; }
+.bar { height: 5px; border-radius: 3px; margin-top: 9px;
+  background: linear-gradient(to right, #30d158 76%, #ffcc00 22%, #ff3b30 2%); }
 
-  /* Summary block */
-  .summary-card {
-    background: linear-gradient(135deg, #1d1d1f 0%, #2c2c2e 100%);
-    border-radius: 14px; padding: 22px 26px; margin-bottom: 22px; color: #fff;
-  }
-  .summary-title { font-size: 11px; text-transform: uppercase; letter-spacing: .7px; color: #8e8e93; margin-bottom: 10px; }
-  .summary-text { font-size: 15px; line-height: 1.65; color: #f2f2f7; }
+/* Summary */
+.summary {
+  background: #1c1c1e; color: #f2f2f7;
+  border-radius: 14px; padding: 22px 26px; margin-bottom: 20px;
+}
+.summary-label { font-size: 10px; text-transform: uppercase; letter-spacing: .7px; color: #636366; margin-bottom: 10px; }
+.summary-text { font-size: 14px; line-height: 1.7; }
+.summary-text strong { color: #fff; }
 
-  /* Charts row */
-  .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 22px; }
-  .card {
-    background: #fff; border-radius: 14px; padding: 22px 24px;
-    border: 1px solid #e5e5ea;
-  }
-  .card-title { font-size: 13px; font-weight: 600; color: #1d1d1f; margin-bottom: 18px; }
-  .chart-wrap { position: relative; }
+/* Charts */
+.two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 20px; }
+.card { background: #fff; border-radius: 14px; padding: 22px 24px; border: 1px solid #e5e5ea; }
+.card-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; }
 
-  /* Top comments */
-  .comment-card {
-    background: #fff; border-radius: 14px; padding: 18px 20px;
-    border: 1px solid #e5e5ea; margin-bottom: 10px;
-    display: flex; gap: 14px; align-items: flex-start;
-  }
-  .comment-likes {
-    flex-shrink: 0; display: flex; flex-direction: column;
-    align-items: center; gap: 2px; min-width: 36px;
-    padding-top: 2px;
-  }
-  .heart { font-size: 16px; }
-  .likes-count { font-size: 12px; font-weight: 600; color: #ff3b30; }
-  .comment-body {}
-  .comment-text { font-size: 14px; line-height: 1.5; color: #1d1d1f; margin-bottom: 5px; }
-  .comment-meta { font-size: 11px; color: #8e8e93; }
-  .comment-theme {
-    display: inline-block; background: #f2f2f7; color: #3c3c43;
-    padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500;
-    margin-left: 6px;
-  }
+/* Comments */
+.comments-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.comment-item {
+  border: 1px solid #e5e5ea; border-radius: 12px; padding: 14px 16px;
+  display: flex; gap: 12px; align-items: flex-start; background: #fff;
+}
+.c-likes { flex-shrink: 0; text-align: center; min-width: 32px; }
+.c-heart { font-size: 14px; }
+.c-num { font-size: 12px; font-weight: 700; color: #ff3b30; display: block; margin-top: 1px; }
+.c-text { font-size: 13px; line-height: 1.5; margin-bottom: 5px; }
+.c-meta { font-size: 11px; color: #8e8e93; }
+.c-badge {
+  display: inline-block; background: #f2f2f7; color: #3c3c43;
+  padding: 2px 8px; border-radius: 8px; font-size: 10px; font-weight: 500; margin-left: 5px;
+}
 
-  /* Posts table */
-  .posts-table { width: 100%; border-collapse: collapse; }
-  .posts-table th {
-    text-align: left; font-size: 11px; font-weight: 600;
-    color: #8e8e93; text-transform: uppercase; letter-spacing: .5px;
-    padding: 0 12px 10px 0; white-space: nowrap;
-  }
-  .posts-table td {
-    padding: 11px 12px 11px 0; border-top: 1px solid #f2f2f7;
-    font-size: 13px; vertical-align: middle;
-  }
-  .posts-table tr:hover td { background: #fafafa; }
-  .post-link { color: #007aff; text-decoration: none; font-weight: 600; font-size: 13px; white-space: nowrap; }
-  .post-link:hover { text-decoration: underline; }
-  .badge {
-    display: inline-block; padding: 3px 9px;
-    border-radius: 10px; font-size: 11px; font-weight: 500;
-    background: #f2f2f7; color: #3c3c43; white-space: nowrap;
-  }
-  .num { font-weight: 600; }
-  .pos { color: #30d158; font-weight: 600; }
+/* Table */
+.posts-table { width: 100%; border-collapse: collapse; }
+.posts-table th {
+  text-align: left; font-size: 11px; font-weight: 600; color: #8e8e93;
+  text-transform: uppercase; letter-spacing: .4px; padding: 0 14px 10px 0;
+}
+.posts-table td {
+  padding: 11px 14px 11px 0; border-top: 1px solid #f2f2f7;
+  font-size: 13px; vertical-align: top;
+}
+.posts-table tr:hover td { background: #fafafa; }
+.badge { display: inline-block; padding: 3px 9px; border-radius: 9px; font-size: 11px; font-weight: 500; background: #f2f2f7; color: #3c3c43; white-space: nowrap; }
+.link { color: #007aff; text-decoration: none; font-weight: 600; white-space: nowrap; }
+.link:hover { text-decoration: underline; }
+.num { font-weight: 600; }
+.pos { color: #30d158; font-weight: 600; font-size: 12px; }
 
-  /* Two col */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+.full-col { margin-bottom: 20px; }
 
-  .footer {
-    text-align: center; padding: 20px 32px; color: #8e8e93; font-size: 12px;
-    border-top: 1px solid #e5e5ea; margin-top: 8px;
-  }
-  .footer a { color: #007aff; text-decoration: none; }
+.footer { text-align: center; padding: 20px; font-size: 12px; color: #8e8e93; border-top: 1px solid #e5e5ea; margin-top: 8px; }
+.footer a { color: #007aff; text-decoration: none; }
 
-  /* Empty state */
-  .empty { text-align: center; padding: 80px 0; color: #8e8e93; }
-  .empty-icon { font-size: 44px; margin-bottom: 14px; }
-  .empty-title { font-size: 17px; font-weight: 600; margin-bottom: 6px; color: #3c3c43; }
+.empty { text-align: center; padding: 80px 20px; color: #8e8e93; }
+.empty-icon { font-size: 44px; margin-bottom: 12px; }
+.empty-title { font-size: 17px; font-weight: 600; color: #3c3c43; margin-bottom: 6px; }
 
-  @media (max-width: 768px) {
-    .stats { grid-template-columns: 1fr 1fr; }
-    .charts-row, .two-col { grid-template-columns: 1fr; }
-    .page { padding: 16px; }
-    .tabs, .header { padding-left: 16px; padding-right: 16px; }
-  }
+@media(max-width:768px){
+  .stats { grid-template-columns: 1fr 1fr; }
+  .two-col, .comments-grid { grid-template-columns: 1fr; }
+  .page, .tabs, .header { padding-left: 16px; padding-right: 16px; }
+}
 </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="header-left">
-    <div class="logo">Яндекс <span>UGC</span></div>
-    <div class="subtitle">Мониторинг упоминаний · Instagram</div>
+  <div>
+    <div class="logo"><em>Яндекс</em> UGC Dashboard</div>
+    <div class="header-sub">Мониторинг упоминаний в Instagram</div>
   </div>
   <a class="sheets-btn" href="https://docs.google.com/spreadsheets/d/1e9G5uRMy7tJjDA-ei_sopeaywB-ZUBvNM3whV7v6_AU" target="_blank">Открыть таблицу →</a>
 </header>
 
 <nav class="tabs">
-  <div class="tab active" onclick="switchTab('pos')">✅ Позитив</div>
-  <div class="tab" onclick="switchTab('neg')">⚠️ Негатив</div>
+  <div class="tab active" onclick="go('pos')">✅ Позитив</div>
+  <div class="tab" onclick="go('neg')">⚠️ Негатив</div>
 </nav>
 
-<!-- ══════════════════ ПОЗИТИВ ══════════════════ -->
+<!-- ПОЗИТИВ -->
 <div id="page-pos" class="page active">
 
   <div class="stats">
     <div class="stat">
-      <div class="stat-label">Постов</div>
-      <div class="stat-val blue">36</div>
-      <div class="stat-sub">Срез · 03.08.2026</div>
+      <div class="stat-label">Постов в срезе</div>
+      <div class="stat-val b">36</div>
+      <div class="stat-sub">03.08.2026</div>
     </div>
     <div class="stat">
       <div class="stat-label">Суммарный охват</div>
@@ -174,74 +144,60 @@
     </div>
     <div class="stat">
       <div class="stat-label">Суммарные лайки</div>
-      <div class="stat-val orange">2.3M</div>
+      <div class="stat-val o">2.3M</div>
       <div class="stat-sub">взаимодействий</div>
     </div>
     <div class="stat">
-      <div class="stat-label">Тональность комментов</div>
-      <div class="stat-val green">76%</div>
-      <div class="stat-sub">позитивных</div>
-      <div class="sentiment-bar"></div>
+      <div class="stat-label">Позитив в комментах</div>
+      <div class="stat-val g">76%</div>
+      <div class="stat-sub">средний по срезу</div>
+      <div class="bar"></div>
     </div>
   </div>
 
-  <!-- Текстовая сводка -->
-  <div class="summary-card">
-    <div class="summary-title">Сводка среза</div>
+  <div class="summary">
+    <div class="summary-label">Сводка среза · 03.08.2026</div>
     <div class="summary-text">
-      За срез собрано <strong>36 позитивных рилсов</strong> с суммарным охватом <strong>18M+ просмотров</strong>.
-      Лидирует контент про <strong>роверов</strong> (6 постов) — люди оставляют трогательные и восторженные комментарии,
-      сравнивая роботов с персонажами Pixar. <strong>Яндекс Музыка</strong> (5 постов) вызывает ностальгию
-      и эмоциональные реакции — аудитория делится личными историями знакомства с артистами.
-      Ролики про <strong>Алису</strong> собирают смешные комменты о том, как колонки «оживают» и включаются сами.
-      Рилсы про <strong>Яндекс Go</strong> (4 поста) показывают неожиданные и трогательные моменты в такси.
-      Средняя тональность комментариев <strong>76% позитив</strong> — аудитория реагирует тепло и искренне.
+      В срезе <strong>36 рилсов</strong> с суммарным охватом <strong>18M+ просмотров</strong>.
+      Самая популярная тема — <strong>роверы Яндекса</strong> (9 постов): люди снимают встречи с роботами на улице,
+      плачут когда те уезжают, помогают выбраться из сугробов. Ролики набирают от 500K до 3.6M просмотров.
+      <strong>Яндекс Go</strong> (6 постов) — вирусные моменты с неожиданными водителями: с шариком, с чупа-чупсами для детей,
+      с трогательной реакцией. <strong>Яндекс Еда</strong> (5 постов) — курьеры с историями: певец, история взросления подростка.
+      <strong>Алиса</strong> (3 поста) — аудитория активно реагирует на ролики про «живые» колонки,
+      пишет что их Алисы тоже «включаются» и «разговаривают». <strong>Яндекс Браузер</strong> (3 поста) —
+      пасхалки с Пухососом стабильно дают вирусный охват.
     </div>
   </div>
 
-  <!-- Темы + Pie -->
-  <div class="charts-row">
+  <div class="two-col">
     <div class="card">
-      <div class="card-title">Распределение по темам</div>
-      <div class="chart-wrap" style="height:300px">
-        <canvas id="themesChart"></canvas>
-      </div>
+      <div class="card-title">Темы контента</div>
+      <div style="height:280px;position:relative"><canvas id="themesChart"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title">Тональность комментариев</div>
-      <div class="chart-wrap" style="height:300px">
-        <canvas id="sentChart"></canvas>
-      </div>
+      <div class="card-title">Распределение по тональности</div>
+      <div style="height:280px;position:relative"><canvas id="sentChart"></canvas></div>
     </div>
   </div>
 
-  <!-- Топ комментарии -->
-  <div class="card" style="margin-bottom:22px">
-    <div class="card-title">Топ комментарии (по лайкам)</div>
-    <div id="top-comments"></div>
+  <div class="card full-col">
+    <div class="card-title">Лучшие комментарии (по лайкам)</div>
+    <div class="comments-grid" id="comments-wrap"></div>
   </div>
 
-  <!-- Топ постов -->
-  <div class="card" style="margin-bottom:22px">
+  <div class="card full-col">
     <div class="card-title">Топ постов по охвату</div>
     <table class="posts-table">
-      <thead>
-        <tr>
-          <th>Автор</th>
-          <th>Тема</th>
-          <th>Просмотры</th>
-          <th>Лайки</th>
-          <th>Тональность</th>
-          <th>Ссылка</th>
-        </tr>
-      </thead>
+      <thead><tr>
+        <th>Автор</th><th>Тема кейса</th><th>Просмотры</th><th>Лайки</th><th>Тональность</th><th>Ссылка</th>
+      </tr></thead>
       <tbody id="posts-body"></tbody>
     </table>
   </div>
 
 </div>
 
-<!-- ══════════════════ НЕГАТИВ ══════════════════ -->
+<!-- НЕГАТИВ -->
 <div id="page-neg" class="page">
   <div class="empty">
     <div class="empty-icon">📊</div>
@@ -252,120 +208,94 @@
 
 <footer class="footer">
   Обновлено 03.08.2026 ·
-  <a href="https://docs.google.com/spreadsheets/d/1e9G5uRMy7tJjDA-ei_sopeaywB-ZUBvNM3whV7v6_AU" target="_blank">Полная таблица</a>
+  <a href="https://docs.google.com/spreadsheets/d/1e9G5uRMy7tJjDA-ei_sopeaywB-ZUBvNM3whV7v6_AU" target="_blank">Полная таблица Google Sheets</a>
 </footer>
 
 <script>
-// ─── Данные ──────────────────────────────────────────────────────────────────
-const themes = [
-  ["Яндекс (общее)", 9],
-  ["Ровер Яндекса", 6],
-  ["Яндекс Музыка", 5],
-  ["Яндекс Go — такси", 4],
+const THEMES = [
+  ["Ровер Яндекса", 9],
+  ["Яндекс Go", 6],
+  ["Яндекс Еда", 5],
+  ["Яндекс Музыка", 3],
+  ["Яндекс Браузер", 3],
   ["Яндекс Карты", 3],
-  ["Яндекс Лавка", 2],
-  ["Яндекс — доставщик", 2],
+  ["Яндекс Алиса", 3],
+  ["Социальные проекты", 2],
   ["Яндекс Мессенджер", 1],
-  ["Яндекс — Алиса", 1],
-  ["Яндекс Браузер", 1],
   ["Яндекс Маркет", 1],
-  ["Яндекс — соцпроект", 1],
 ];
 
-const topComments = [
-  { likes: 6, text: "я узнала вообще не с песни, а благодаря Глебу, он чёт писал про вас, Даниил в 2020-х — это что-то особенное", author: "dkim_real", theme: "Яндекс Музыка" },
-  { likes: 5, text: "Зачем вы заставили меня встать в 2 ночи это проверять 😂", author: "lesyajekson", theme: "Ровер Яндекса" },
-  { likes: 4, text: "Я сейчас пойду проверять, если моя Алиса сломается — ответственность на вас 😅", author: "lesyajekson", theme: "Ровер Яндекса" },
-  { likes: 3, text: "Пока смотрела видео, моя Алиса с вашей разговаривала 😁", author: "new__kuzya", theme: "Яндекс — Алиса" },
-  { likes: 2, text: "Моя Алиса начала рассказывать про кошек и сказала, чтоб я шла спать 😂", author: "new__kuzya", theme: "Яндекс — Алиса" },
-  { likes: 2, text: "😂🔥🔥😍❤️", author: "kate_krygina", theme: "Ровер Яндекса" },
-  { likes: 1, text: "Я тебя знаю ещё до песен, ты мне маску дарил 😄 А теперь ещё и песни твои слушаю 🫶", author: "dkim_real", theme: "Яндекс Музыка" },
-  { likes: 1, text: "Два года на повторе: кометы, планы на лето, моменты ❤️❤️❤️", author: "dkim_real", theme: "Яндекс Музыка" },
+const COMMENTS = [
+  { likes: 6, text: "я узнала вообще не с песни, а благодаря Глебу — Даниил в 2023 году что-то особенное", author: "dkim_real", theme: "Яндекс Музыка" },
+  { likes: 5, text: "Зачем вы заставили меня встать в 2 ночи это проверять 😂", author: "lesyajekson", theme: "Яндекс Алиса" },
+  { likes: 4, text: "Я сейчас пойду проверять, если моя Алиса сломается — ответственность на вас 😅", author: "lesyajekson", theme: "Яндекс Алиса" },
+  { likes: 3, text: "Пока смотрела видео, моя Алиса с вашей разговаривала 😁", author: "new__kuzya", theme: "Яндекс Алиса" },
+  { likes: 2, text: "Моя Алиса начала рассказывать про кошек и сказала, чтоб я шла спать 😂", author: "new__kuzya", theme: "Яндекс Алиса" },
+  { likes: 1, text: "До слёз просто 😭 это так мило 🥺 какой чудесный сынок 😍", author: "druzhinina_nail", theme: "Ровер Яндекса" },
+  { likes: 1, text: "Оказывается у нас есть люди, а не одни суолочи в такси ❤️", author: "malikasvjastins", theme: "Яндекс Go" },
+  { likes: 1, text: "Какой чудесный подарок @yandex.market 🥹", author: "gazizov828", theme: "Яндекс Маркет" },
 ];
 
-const topPosts = [
-  { author: "lara__vo__",       views: 3646708, likes: 148843, theme: "Яндекс (общее)",       pos: "78%", url: "https://www.instagram.com/reel/DZXPfBvs5VP/" },
-  { author: "hosti_music_",     views: 2736023, likes: 263481, theme: "Яндекс Go — такси",    pos: "82%", url: "https://www.instagram.com/reel/DZa4izToELF/" },
-  { author: "holod.media",      views: 1957927, likes: 321771, theme: "Яндекс — доставщик",   pos: "75%", url: "https://www.instagram.com/reel/DbXs3ESt-z2/" },
-  { author: "new__kuzya",       views: 1833566, likes: 130231, theme: "Яндекс — Алиса",       pos: "88%", url: "https://www.instagram.com/reel/DZ9tqNKoH9p/" },
-  { author: "kate_krygina",     views: 1369187, likes: 28798,  theme: "Ровер Яндекса",        pos: "80%", url: "https://www.instagram.com/reel/DZZeov6u9dL/" },
-  { author: "sasha.strelkina",  views: 648156,  likes: 64757,  theme: "Ровер Яндекса",        pos: "76%", url: "https://www.instagram.com/reel/DbXmczcI0Cb/" },
-  { author: "almira.rabatovna", views: 676926,  likes: 59967,  theme: "Яндекс Музыка",        pos: "70%", url: "https://www.instagram.com/reel/Da5OxdBspYZ/" },
-  { author: "vlastify",         views: 514933,  likes: 284404, theme: "Ровер Яндекса",        pos: "85%", url: "https://www.instagram.com/reel/Da0MciUMRND/" },
-  { author: "sasha_travelova",  views: 604262,  likes: 17534,  theme: "Яндекс (общее)",       pos: "72%", url: "https://www.instagram.com/reel/Dbc_k7pNJEv/" },
-  { author: "rykunova.an",      views: 496284,  likes: 24727,  theme: "Яндекс (общее)",       pos: "88%", url: "https://www.instagram.com/reel/DZVnuOvxjPv/" },
+const TOP_POSTS = [
+  { a: "lara__vo__",       v: 3646708, l: 148843, th: "Яндекс Go — водитель с шариком",         p: "78%", url: "https://www.instagram.com/reel/DZXPfBvs5VP/" },
+  { a: "hosti_music_",     v: 2736023, l: 263481, th: "Яндекс Go — трогательная реакция водителя", p: "82%", url: "https://www.instagram.com/reel/DZa4izToELF/" },
+  { a: "holod.media",      v: 1957927, l: 321771, th: "Яндекс Еда — курьер исполнил мечту",     p: "75%", url: "https://www.instagram.com/reel/DbXs3ESt-z2/" },
+  { a: "new__kuzya",       v: 1833566, l: 130231, th: "Алиса как компаньон для бабушки",         p: "88%", url: "https://www.instagram.com/reel/DXeosQODVMD/" },
+  { a: "kate_krygina",     v: 1369187, l: 28798,  th: "Яндекс Браузер — пасхалка Пухосос",      p: "80%", url: "https://www.instagram.com/reel/DZZeov6u9dL/" },
+  { a: "sasha.strelkina",  v: 648156,  l: 64757,  th: "Ровер Яндекс Лавки — «сделайте менее милыми»", p: "76%", url: "https://www.instagram.com/reel/DbXmczcI0Cb/" },
+  { a: "almira.rabatovna", v: 676926,  l: 59967,  th: "Яндекс Go — водитель-философ с чупа-чупсами", p: "70%", url: "https://www.instagram.com/reel/DZ9tqNKoH9p/" },
+  { a: "vlastify",         v: 514933,  l: 284404, th: "Ровер Яндекса — люди помогают роботам",  p: "85%", url: "https://www.instagram.com/reel/Da0MciUMRND/" },
+  { a: "sasha_travelova",  v: 604262,  l: 17534,  th: "Яндекс Доставка — подросток-курьер",     p: "72%", url: "https://www.instagram.com/reel/Dbc_k7pNJEv/" },
+  { a: "la_capital_de_oro",v: 152090,  l: 348083, th: "Ровер Яндекса — Россия vs США",          p: "80%", url: "https://www.instagram.com/reel/DayOuCOK6G-/" },
 ];
 
-// ─── Tab switch ───────────────────────────────────────────────────────────────
-function switchTab(t) {
-  document.querySelectorAll('.tab').forEach((el,i) => el.classList.toggle('active', ['pos','neg'][i]===t));
-  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+const PAL = ['#ff3b30','#ff9f0a','#30d158','#007aff','#5856d6','#ff2d55','#ac8e68','#34c759','#5ac8fa','#af52de'];
+
+function go(t) {
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['pos','neg'][i]===t));
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+t).classList.add('active');
 }
 
-// ─── Палитра ──────────────────────────────────────────────────────────────────
-const pal = ['#ff3b30','#ff9f0a','#30d158','#007aff','#5856d6',
-             '#ff2d55','#ac8e68','#34c759','#5ac8fa','#af52de','#ff6b35','#636366'];
-
-// ─── Bar chart темы ───────────────────────────────────────────────────────────
-new Chart(document.getElementById('themesChart'), {
-  type: 'bar',
-  data: {
-    labels: themes.map(t => t[0]),
-    datasets: [{ data: themes.map(t => t[1]), backgroundColor: pal, borderRadius: 6, borderSkipped: false }]
-  },
-  options: {
-    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { grid: { color: '#f2f2f7' }, ticks: { stepSize: 1 } },
-      y: { grid: { display: false }, ticks: { font: { size: 12 } } }
-    }
-  }
+// Bar chart
+new Chart(document.getElementById('themesChart'),{
+  type:'bar',
+  data:{labels:THEMES.map(t=>t[0]),datasets:[{data:THEMES.map(t=>t[1]),backgroundColor:PAL,borderRadius:6,borderSkipped:false}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:'#f2f2f7'},ticks:{stepSize:1}},y:{grid:{display:false},ticks:{font:{size:12}}}}}
 });
 
-// ─── Doughnut тональность ─────────────────────────────────────────────────────
-new Chart(document.getElementById('sentChart'), {
-  type: 'doughnut',
-  data: {
-    labels: ['Позитив', 'Нейтрал', 'Негатив'],
-    datasets: [{ data: [76, 22, 2], backgroundColor: ['#30d158','#ffcc00','#ff3b30'], borderWidth: 0, hoverOffset: 8 }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false, cutout: '65%',
-    plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 13 }, usePointStyle: true } } }
-  }
+// Doughnut
+new Chart(document.getElementById('sentChart'),{
+  type:'doughnut',
+  data:{labels:['Позитив','Нейтрал','Негатив'],datasets:[{data:[76,22,2],backgroundColor:['#30d158','#ffcc00','#ff3b30'],borderWidth:0,hoverOffset:8}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+    plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:13},usePointStyle:true}}}}
 });
 
-// ─── Топ комментарии ──────────────────────────────────────────────────────────
-const commEl = document.getElementById('top-comments');
-topComments.forEach(c => {
-  commEl.innerHTML += `
-    <div class="comment-card">
-      <div class="comment-likes">
-        <span class="heart">❤️</span>
-        <span class="likes-count">${c.likes}</span>
-      </div>
-      <div class="comment-body">
-        <div class="comment-text">${c.text}</div>
-        <div class="comment-meta">@${c.author}<span class="comment-theme">${c.theme}</span></div>
-      </div>
-    </div>`;
+// Comments
+const cw = document.getElementById('comments-wrap');
+COMMENTS.forEach(c=>{
+  cw.innerHTML += `<div class="comment-item">
+    <div class="c-likes"><span class="c-heart">❤️</span><span class="c-num">${c.likes}</span></div>
+    <div><div class="c-text">${c.text}</div>
+    <div class="c-meta">@${c.a||c.author}<span class="c-badge">${c.theme}</span></div></div>
+  </div>`;
 });
 
-// ─── Таблица постов ───────────────────────────────────────────────────────────
-const tbody = document.getElementById('posts-body');
-topPosts.forEach(p => {
-  const fv = v => v >= 1e6 ? (v/1e6).toFixed(1)+'M' : (v/1e3).toFixed(0)+'K';
-  tbody.innerHTML += `
-    <tr>
-      <td><strong>@${p.author}</strong></td>
-      <td><span class="badge">${p.theme}</span></td>
-      <td class="num">${fv(p.views)}</td>
-      <td class="num">${fv(p.likes)}</td>
-      <td class="pos">${p.pos}</td>
-      <td><a class="post-link" href="${p.url}" target="_blank">Открыть →</a></td>
-    </tr>`;
+// Table
+const tb = document.getElementById('posts-body');
+TOP_POSTS.forEach(p=>{
+  const fv=v=>v>=1e6?(v/1e6).toFixed(1)+'M':(v/1e3).toFixed(0)+'K';
+  tb.innerHTML+=`<tr>
+    <td><strong>@${p.a}</strong></td>
+    <td><span class="badge">${p.th}</span></td>
+    <td class="num">${fv(p.v)}</td>
+    <td class="num">${fv(p.l)}</td>
+    <td class="pos">${p.p}</td>
+    <td><a class="link" href="${p.url}" target="_blank">Открыть →</a></td>
+  </tr>`;
 });
 </script>
 </body>
