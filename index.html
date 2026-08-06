@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Яндекс UGC Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; }
+
+  .header {
+    background: #fff;
+    border-bottom: 1px solid #e5e5ea;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo { font-size: 22px; font-weight: 700; color: #ff3b30; letter-spacing: -0.5px; }
+  .logo span { color: #1d1d1f; }
+  .subtitle { font-size: 13px; color: #8e8e93; }
+  .sheets-link {
+    font-size: 13px; color: #007aff; text-decoration: none;
+    border: 1px solid #007aff; padding: 6px 14px; border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .sheets-link:hover { background: #007aff; color: #fff; }
+
+  .tabs {
+    display: flex;
+    padding: 0 32px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5ea;
+    gap: 0;
+  }
+  .tab {
+    padding: 14px 24px;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; border-bottom: 2px solid transparent;
+    color: #8e8e93; transition: all 0.2s;
+  }
+  .tab.active { color: #1d1d1f; border-bottom-color: #ff3b30; }
+  .tab:hover:not(.active) { color: #3c3c43; }
+
+  .tab-content { display: none; padding: 32px; max-width: 1200px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* Сводка */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    border: 1px solid #e5e5ea;
+  }
+  .stat-label { font-size: 12px; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .stat-value { font-size: 32px; font-weight: 700; letter-spacing: -1px; }
+  .stat-value.green { color: #30d158; }
+  .stat-value.red { color: #ff3b30; }
+  .stat-value.blue { color: #007aff; }
+  .stat-sub { font-size: 12px; color: #8e8e93; margin-top: 4px; }
+
+  /* Тональность большая */
+  .sentiment-bar {
+    height: 10px; border-radius: 5px;
+    background: linear-gradient(to right, #30d158 78%, #ffcc00 20%, #ff3b30 2%);
+    margin-top: 8px;
+  }
+
+  /* Чарты */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .chart-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #e5e5ea;
+  }
+  .chart-title {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 20px; color: #1d1d1f;
+  }
+  .chart-wrap { position: relative; }
+
+  /* Топ авторы */
+  .authors-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .author-row {
+    display: flex; align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f2f2f7;
+    gap: 12px;
+  }
+  .author-row:last-child { border-bottom: none; }
+  .author-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #ff3b30, #ff9f0a);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .author-name { font-size: 14px; font-weight: 500; }
+  .author-theme { font-size: 12px; color: #8e8e93; }
+  .author-views { margin-left: auto; font-size: 13px; font-weight: 600; color: #007aff; white-space: nowrap; }
+
+  /* Облако слов */
+  .word-cloud {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+  }
+  .word-tag {
+    padding: 6px 14px; border-radius: 20px;
+    background: #f2f2f7; color: #1d1d1f;
+    font-weight: 500; cursor: default;
+    transition: background 0.2s;
+  }
+  .word-tag:hover { background: #e5e5ea; }
+  .word-tag.size-1 { font-size: 11px; opacity: 0.6; }
+  .word-tag.size-2 { font-size: 13px; opacity: 0.75; }
+  .word-tag.size-3 { font-size: 15px; background: #e3f2fd; color: #007aff; }
+  .word-tag.size-4 { font-size: 18px; font-weight: 700; background: #fff3e0; color: #ff9f0a; }
+  .word-tag.size-5 { font-size: 22px; font-weight: 800; background: #fce4ec; color: #ff3b30; }
+
+  /* Таблица топ постов */
+  .posts-table { width: 100%; border-collapse: collapse; }
+  .posts-table th {
+    text-align: left; font-size: 11px; font-weight: 600;
+    color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 0 12px 12px 0;
+  }
+  .posts-table td {
+    padding: 12px 12px 12px 0;
+    border-top: 1px solid #f2f2f7;
+    font-size: 13px; vertical-align: middle;
+  }
+  .posts-table tr:hover td { background: #f9f9fb; }
+  .post-link {
+    color: #007aff; text-decoration: none; font-weight: 600;
+    font-size: 13px;
+  }
+  .post-link:hover { text-decoration: underline; }
+  .theme-badge {
+    display: inline-block; padding: 3px 10px;
+    border-radius: 12px; font-size: 11px; font-weight: 500;
+    background: #f2f2f7; color: #3c3c43;
+  }
+  .num { font-weight: 600; color: #1d1d1f; }
+  .sent-pos { color: #30d158; font-weight: 600; }
+  .sent-neg { color: #ff3b30; font-weight: 600; }
+
+  .section-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .footer {
+    text-align: center; padding: 24px;
+    color: #8e8e93; font-size: 12px;
+    border-top: 1px solid #e5e5ea;
+    margin-top: 16px;
+  }
+  .footer a { color: #007aff; text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .charts-row, .authors-grid, .section-row { grid-template-columns: 1fr; }
+    .tab-content { padding: 16px; }
+    .tabs { padding: 0 16px; }
+    .header { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">Яндекс <span>UGC</span></div>
+    <div class="subtitle">Мониторинг упоминаний в Instagram</div>
+  </div>
+  <a class="sheets-link" href="https://docs.google.com/spreadsheets/d/1e9G5uRMy7tJjDA-ei_sopeaywB-ZUBvNM3whV7v6_AU" target="_blank">
+    Открыть таблицу →
+  </a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('positive')">Позитив</div>
+  <div class="tab" onclick="switchTab('negative')">Негатив</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ ПОЗИТИВ -->
+<div id="tab-positive" class="tab-content active">
+
+  <!-- Сводка -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Постов</div>
+      <div class="stat-value blue">36</div>
+      <div class="stat-sub">Срез от 03.08.2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Суммарный охват</div>
+      <div class="stat-value">18.0M</div>
+      <div class="stat-sub">просмотров</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Суммарные лайки</div>
+      <div class="stat-value">2.3M</div>
+      <div class="stat-sub">взаимодействий</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Тональность</div>
+      <div class="stat-value green">78%</div>
+      <div class="stat-sub">позитивных комментариев</div>
+      <div class="sentiment-bar" style="background: linear-gradient(to right, #30d158 78%, #ffcc00 21%, #ff3b30 1%);"></div>
+    </div>
+  </div>
+
+  <!-- Темы + Pie -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Темы контента</div>
+      <div class="chart-wrap" style="height:280px">
+        <canvas id="themesChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Тональность комментариев</div>
+      <div class="chart-wrap" style="height:280px">
+        <canvas id="sentimentChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Топ авторы + Облако слов -->
+  <div class="section-row">
+    <div class="chart-card">
+      <div class="chart-title">Топ авторов по охвату</div>
+      <div id="authors-list"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">О чём пишут в комментариях</div>
+      <div class="word-cloud" id="word-cloud"></div>
+    </div>
+  </div>
+
+  <!-- Топ постов -->
+  <div class="chart-card" style="margin-bottom: 28px;">
+    <div class="chart-title">Топ постов по охвату</div>
+    <table class="posts-table">
+      <thead>
+        <tr>
+          <th>Автор</th>
+          <th>Тема</th>
+          <th>Просмотры</th>
+          <th>Лайки</th>
+          <th>Тональность</th>
+          <th>Ссылка</th>
+        </tr>
+      </thead>
+      <tbody id="posts-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ НЕГАТИВ -->
+<div id="tab-negative" class="tab-content">
+  <div style="text-align:center; padding: 80px 0; color: #8e8e93;">
+    <div style="font-size: 48px; margin-bottom: 16px;">📊</div>
+    <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Данные ещё не загружены</div>
+    <div style="font-size: 14px;">Добавьте негативный UGC через анализатор</div>
+  </div>
+</div>
+
+<div class="footer">
+  Данные обновлены 03.08.2026 · 
+  <a href="https://docs.google.com/spreadsheets/d/1e9G5uRMy7tJjDA-ei_sopeaywB-ZUBvNM3whV7v6_AU" target="_blank">Открыть полную таблицу</a>
+</div>
+
+<script>
+// ── Данные ────────────────────────────────────────────────────────────────────
+const themes = [
+  ["Упоминание Яндекса", 11],
+  ["Ровер Яндекса", 6],
+  ["Яндекс Музыка", 4],
+  ["Яндекс Go — такси", 3],
+  ["Яндекс Карты", 3],
+  ["Яндекс Мессенджер", 2],
+  ["Яндекс — доставщик/курьер", 2],
+  ["Яндекс — соцпроект", 1],
+  ["Яндекс Лавка", 1],
+  ["Яндекс Браузер — Пухосос", 1],
+  ["Яндекс — Алиса", 1],
+  ["Яндекс Маркет", 1]
+];
+
+const topPosts = [
+  { author: "lara__vo__",      views: 3646708, likes: 148843, theme: "Упоминание Яндекса",        sent: "78% pos", url: "https://www.instagram.com/reel/DZXPfBvs5VP/" },
+  { author: "hosti_music_",    views: 2736023, likes: 263481, theme: "Яндекс Go — такси",          sent: "82% pos", url: "https://www.instagram.com/reel/DZa4izToELF/" },
+  { author: "holod.media",     views: 1957927, likes: 321771, theme: "Яндекс — доставщик/курьер",  sent: "75% pos", url: "https://www.instagram.com/reel/DbXs3ESt-z2/" },
+  { author: "new__kuzya",      views: 1833566, likes: 130231, theme: "Яндекс — Алиса",             sent: "88% pos", url: "https://www.instagram.com/reel/DZ9tqNKoH9p/" },
+  { author: "kate_krygina",    views: 1369187, likes: 28798,  theme: "Ровер Яндекса",              sent: "80% pos", url: "https://www.instagram.com/reel/DZZeov6u9dL/" },
+  { author: "sasha.strelkina", views: 648156,  likes: 64757,  theme: "Ровер Яндекса",              sent: "76% pos", url: "https://www.instagram.com/reel/DbXmczcI0Cb/" },
+  { author: "almira.rabatovna",views: 676926,  likes: 59967,  theme: "Яндекс Мессенджер",          sent: "70% pos", url: "https://www.instagram.com/reel/Da5OxdBspYZ/" },
+  { author: "vlastify",        views: 514933,  likes: 284404, theme: "Ровер Яндекса",              sent: "85% pos", url: "https://www.instagram.com/reel/Da0MciUMRND/" },
+  { author: "sasha_travelova", views: 604262,  likes: 17534,  theme: "Упоминание Яндекса",         sent: "72% pos", url: "https://www.instagram.com/reel/Dbc_k7pNJEv/" },
+  { author: "rykunova.an",     views: 496284,  likes: 24727,  theme: "Упоминание Яндекса",         sent: "88% pos", url: "https://www.instagram.com/reel/DZVnuOvxjPv/" },
+];
+
+const topAuthors = topPosts.slice(0, 8);
+
+const topWords = [
+  ["алиса", 7], ["спасибо", 5], ["песни", 4], ["слушаю", 4], ["кометы", 4],
+  ["музыка", 3], ["классно", 3], ["ровер", 3], ["доставка", 3], ["круто", 3],
+  ["люблю", 2], ["яндекс", 9], ["работает", 8], ["сервис", 2], ["удобно", 2],
+  ["нравится", 2], ["рекомендую", 2], ["Алиса", 7]
+];
+
+// ── Переключение табов ────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', ['positive','negative'][i] === tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// ── Bar chart — темы ─────────────────────────────────────────────────────────
+const colors = [
+  '#ff3b30','#ff9f0a','#30d158','#007aff','#5856d6',
+  '#ff2d55','#ac8e68','#34c759','#5ac8fa','#af52de','#ff6b35','#1c1c1e'
+];
+
+new Chart(document.getElementById('themesChart'), {
+  type: 'bar',
+  data: {
+    labels: themes.map(t => t[0]),
+    datasets: [{
+      data: themes.map(t => t[1]),
+      backgroundColor: colors,
+      borderRadius: 6,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#f2f2f7' }, ticks: { stepSize: 1 } },
+      y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+    }
+  }
+});
+
+// ── Pie chart — тональность ───────────────────────────────────────────────────
+new Chart(document.getElementById('sentimentChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Позитив', 'Нейтрал', 'Негатив'],
+    datasets: [{
+      data: [78, 20, 2],
+      backgroundColor: ['#30d158', '#ffcc00', '#ff3b30'],
+      borderWidth: 0,
+      hoverOffset: 8,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    cutout: '65%',
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { padding: 16, font: { size: 13 }, usePointStyle: true }
+      }
+    }
+  }
+});
+
+// ── Топ авторы ────────────────────────────────────────────────────────────────
+const authorsEl = document.getElementById('authors-list');
+topAuthors.forEach((p, i) => {
+  const initials = p.author.slice(0,2).toUpperCase();
+  const views = p.views >= 1000000
+    ? (p.views/1000000).toFixed(1) + 'M'
+    : (p.views/1000).toFixed(0) + 'K';
+  authorsEl.innerHTML += `
+    <div class="author-row">
+      <div class="author-avatar" style="background: linear-gradient(135deg, ${colors[i]}, ${colors[(i+3)%12]})">${initials}</div>
+      <div>
+        <div class="author-name">@${p.author}</div>
+        <div class="author-theme">${p.theme}</div>
+      </div>
+      <div class="author-views">${views}</div>
+    </div>`;
+});
+
+// ── Облако слов ───────────────────────────────────────────────────────────────
+const wcEl = document.getElementById('word-cloud');
+const maxCount = Math.max(...topWords.map(w => w[1]));
+topWords.forEach(([word, count]) => {
+  const ratio = count / maxCount;
+  const size = ratio > 0.8 ? 5 : ratio > 0.6 ? 4 : ratio > 0.4 ? 3 : ratio > 0.25 ? 2 : 1;
+  wcEl.innerHTML += `<span class="word-tag size-${size}">${word}</span>`;
+});
+
+// ── Таблица постов ────────────────────────────────────────────────────────────
+const tbody = document.getElementById('posts-tbody');
+topPosts.forEach(p => {
+  const views = p.views >= 1000000
+    ? (p.views/1000000).toFixed(1) + 'M'
+    : (p.views/1000).toFixed(0) + 'K';
+  const likes = p.likes >= 1000000
+    ? (p.likes/1000000).toFixed(1) + 'M'
+    : (p.likes/1000).toFixed(0) + 'K';
+  tbody.innerHTML += `
+    <tr>
+      <td><strong>@${p.author}</strong></td>
+      <td><span class="theme-badge">${p.theme}</span></td>
+      <td class="num">${views}</td>
+      <td class="num">${likes}</td>
+      <td class="sent-pos">${p.sent}</td>
+      <td><a class="post-link" href="${p.url}" target="_blank">Открыть →</a></td>
+    </tr>`;
+});
+</script>
+</body>
+</html>
