@@ -9,7 +9,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f2f2f7; color: #1d1d1f; }
 
-/* ── Header ── */
 .header {
   background: #fff; border-bottom: 1px solid #e5e5ea;
   padding: 16px 32px; display: flex; align-items: center;
@@ -24,7 +23,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 }
 .sheets-btn:hover { background: #007aff; color: #fff; }
 
-/* ── Tabs ── */
 .tabs { background: #fff; border-bottom: 1px solid #e5e5ea; display: flex; padding: 0 32px; }
 .tab {
   padding: 12px 22px; font-size: 14px; font-weight: 500;
@@ -35,7 +33,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .page { display: none; padding: 28px 32px; max-width: 1140px; margin: 0 auto; }
 .page.active { display: block; }
 
-/* ── Stats ── */
+/* Stats */
 .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
 .stat { background: #fff; border-radius: 14px; padding: 18px 20px; border: 1px solid #e5e5ea; }
 .stat-label { font-size: 11px; color: #8e8e93; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
@@ -44,73 +42,91 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .stat-val.b { color: #007aff; }
 .stat-val.o { color: #ff9f0a; }
 .stat-sub { font-size: 11px; color: #8e8e93; margin-top: 4px; }
-.bar { height: 5px; border-radius: 3px; margin-top: 9px;
-  background: linear-gradient(to right, #30d158 76%, #ffcc00 22%, #ff3b30 2%); }
+.tonal-bar { height: 6px; border-radius: 3px; margin-top: 9px; }
 
-/* ── Summary ── */
-.summary {
+/* Insights */
+.insights {
   border-radius: 16px; margin-bottom: 20px; overflow: hidden;
   background: #1c1c1e;
 }
-.summary-header {
+.insights-header {
   padding: 18px 24px 14px;
   display: flex; align-items: center; justify-content: space-between;
   border-bottom: 1px solid #2c2c2e;
 }
-.summary-title { font-size: 13px; font-weight: 600; color: #fff; }
-.summary-date { font-size: 12px; color: #636366; }
-.summary-insights { display: grid; grid-template-columns: repeat(3,1fr); }
+.insights-title { font-size: 13px; font-weight: 600; color: #fff; }
+.insights-date { font-size: 12px; color: #636366; }
+.insights-grid { display: grid; grid-template-columns: repeat(3,1fr); }
 .insight {
-  padding: 18px 24px; border-right: 1px solid #2c2c2e;
-  transition: background .15s;
+  padding: 20px 24px; border-right: 1px solid #2c2c2e; transition: background .15s;
 }
 .insight:last-child { border-right: none; }
 .insight:hover { background: #242426; }
-.insight-icon { font-size: 24px; margin-bottom: 10px; }
-.insight-heading { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-.insight-text { font-size: 12px; line-height: 1.6; color: #aeaeb2; }
-.insight-stat {
-  display: inline-block; margin-top: 10px;
-  background: #2c2c2e; color: #fff; font-size: 11px; font-weight: 600;
+.insight-icon { font-size: 26px; margin-bottom: 10px; }
+.insight-heading { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 7px; }
+.insight-text { font-size: 12px; line-height: 1.65; color: #aeaeb2; }
+.insight-tag {
+  display: inline-block; margin-top: 11px; font-size: 11px; font-weight: 600;
   padding: 4px 10px; border-radius: 8px;
 }
-.insight-stat.green { background: #1a3a24; color: #30d158; }
-.insight-stat.orange { background: #3a2a10; color: #ff9f0a; }
-.insight-stat.blue { background: #0d2a3d; color: #5ac8fa; }
-.insight-stat.pink { background: #3a1020; color: #ff2d55; }
+.tag-orange { background: #3a2a10; color: #ff9f0a; }
+.tag-green  { background: #1a3a24; color: #30d158; }
+.tag-blue   { background: #0d2a3d; color: #5ac8fa; }
 
-/* ── Two col ── */
+/* Two col */
 .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 20px; }
 .card { background: #fff; border-radius: 14px; padding: 22px 24px; border: 1px solid #e5e5ea; }
-.card-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+.card-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: #1d1d1f; }
 
-/* ── Word cloud ── */
-.wordcloud { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 0; }
-.word {
-  padding: 5px 13px; border-radius: 20px; cursor: default;
-  background: #f2f2f7; color: #1d1d1f; font-weight: 500; transition: transform .15s;
+/* Theme breakdown */
+.theme-breakdown { margin-bottom: 20px; }
+.theme-section { margin-bottom: 24px; }
+.theme-name {
+  font-size: 15px; font-weight: 700; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 10px;
 }
-.word:hover { transform: scale(1.05); }
-.word.s1 { font-size: 11px; opacity: .55; }
-.word.s2 { font-size: 13px; opacity: .7; }
-.word.s3 { font-size: 15px; background: #e8f4ff; color: #007aff; }
-.word.s4 { font-size: 18px; font-weight: 700; background: #fff4e0; color: #ff9f0a; }
-.word.s5 { font-size: 22px; font-weight: 800; background: #ffeef0; color: #ff3b30; }
+.theme-count {
+  font-size: 11px; font-weight: 500; background: #f2f2f7;
+  color: #8e8e93; padding: 2px 8px; border-radius: 8px;
+}
+.theme-tonal { font-size: 12px; color: #8e8e93; margin-bottom: 8px; }
+.theme-bullets { padding-left: 0; list-style: none; }
+.theme-bullets li {
+  font-size: 13px; line-height: 1.6; color: #3c3c43; padding: 3px 0;
+  padding-left: 14px; position: relative;
+}
+.theme-bullets li::before { content: "·"; position: absolute; left: 0; color: #c7c7cc; }
 
-/* ── Table ── */
+/* Comments */
+.comments-list { display: flex; flex-direction: column; gap: 10px; }
+.comment-card {
+  background: #fff; border-radius: 12px; padding: 16px 18px;
+  border: 1px solid #e5e5ea;
+  border-left: 3px solid #ff3b30;
+}
+.comment-quote { font-size: 14px; line-height: 1.6; color: #1d1d1f; margin-bottom: 8px; font-style: italic; }
+.comment-meta { font-size: 11px; color: #8e8e93; display: flex; align-items: center; gap: 8px; }
+.comment-badge {
+  background: #f2f2f7; color: #3c3c43; padding: 2px 8px;
+  border-radius: 8px; font-size: 10px; font-weight: 500; font-style: normal;
+}
+
+/* Table */
 .posts-table { width: 100%; border-collapse: collapse; }
 .posts-table th {
   text-align: left; font-size: 11px; font-weight: 600; color: #8e8e93;
-  text-transform: uppercase; letter-spacing: .4px; padding: 0 14px 10px 0;
+  text-transform: uppercase; letter-spacing: .4px; padding: 0 12px 10px 0;
 }
-.posts-table td { padding: 11px 14px 11px 0; border-top: 1px solid #f2f2f7; font-size: 13px; vertical-align: top; }
+.posts-table td { padding: 10px 12px 10px 0; border-top: 1px solid #f2f2f7; font-size: 13px; vertical-align: top; }
 .posts-table tr:hover td { background: #fafafa; }
 .badge { display: inline-block; padding: 3px 9px; border-radius: 9px; font-size: 11px; font-weight: 500; background: #f2f2f7; color: #3c3c43; white-space: nowrap; }
 .link { color: #007aff; text-decoration: none; font-weight: 600; white-space: nowrap; }
 .link:hover { text-decoration: underline; }
 .num { font-weight: 600; }
 .pos { color: #30d158; font-weight: 600; font-size: 12px; }
-.full-col { margin-bottom: 20px; }
+.neg { color: #ff3b30; font-weight: 600; font-size: 12px; }
+
+.mb20 { margin-bottom: 20px; }
 
 .footer { text-align: center; padding: 20px; font-size: 12px; color: #8e8e93; border-top: 1px solid #e5e5ea; margin-top: 8px; }
 .footer a { color: #007aff; text-decoration: none; }
@@ -119,10 +135,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .empty-icon { font-size: 44px; margin-bottom: 12px; }
 .empty-title { font-size: 17px; font-weight: 600; color: #3c3c43; margin-bottom: 6px; }
 
+/* Section divider */
+.section-label {
+  font-size: 11px; font-weight: 600; color: #8e8e93;
+  text-transform: uppercase; letter-spacing: .6px;
+  margin-bottom: 12px; margin-top: 28px;
+}
+.section-label:first-child { margin-top: 0; }
+
 @media(max-width:768px){
   .stats { grid-template-columns: 1fr 1fr; }
   .two-col { grid-template-columns: 1fr; }
-  .summary-insights { grid-template-columns: 1fr; }
+  .insights-grid { grid-template-columns: 1fr; }
   .insight { border-right: none; border-bottom: 1px solid #2c2c2e; }
   .page, .tabs, .header { padding-left: 16px; padding-right: 16px; }
 }
@@ -143,87 +167,103 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div class="tab" onclick="go('neg')">⚠️ Негатив</div>
 </nav>
 
-<!-- ══════════ ПОЗИТИВ ══════════ -->
+<!-- ПОЗИТИВ -->
 <div id="page-pos" class="page active">
 
+  <!-- Метрики -->
   <div class="stats">
     <div class="stat">
       <div class="stat-label">Постов в срезе</div>
-      <div class="stat-val b">36</div>
-      <div class="stat-sub">03.08.2026</div>
+      <div class="stat-val b">40</div>
+      <div class="stat-sub">Июль — Август 2026</div>
     </div>
     <div class="stat">
       <div class="stat-label">Суммарный охват</div>
-      <div class="stat-val">18.0M</div>
+      <div class="stat-val">47.7M</div>
       <div class="stat-sub">просмотров</div>
     </div>
     <div class="stat">
       <div class="stat-label">Суммарные лайки</div>
-      <div class="stat-val o">2.3M</div>
+      <div class="stat-val o">2.0M</div>
       <div class="stat-sub">взаимодействий</div>
     </div>
     <div class="stat">
       <div class="stat-label">Позитив в комментах</div>
-      <div class="stat-val g">76%</div>
+      <div class="stat-val g">83%</div>
       <div class="stat-sub">средний по срезу</div>
-      <div class="bar"></div>
+      <div class="tonal-bar" style="background: linear-gradient(to right, #30d158 83%, #ffcc00 12%, #ff3b30 5%)"></div>
     </div>
   </div>
 
-  <!-- Сводка -->
-  <div class="summary">
-    <div class="summary-header">
-      <div class="summary-title">Ключевые инсайты среза</div>
-      <div class="summary-date">03.08.2026 · 36 рилсов · Instagram</div>
+  <!-- Ключевые инсайты -->
+  <div class="insights">
+    <div class="insights-header">
+      <div class="insights-title">Ключевые инсайты среза</div>
+      <div class="insights-date">Июль — Август 2026 · 40 рилсов · Instagram</div>
     </div>
-    <div class="summary-insights">
+    <div class="insights-grid">
       <div class="insight">
         <div class="insight-icon">🤖</div>
-        <div class="insight-heading">Роверы — абсолютный лидер позитива</div>
+        <div class="insight-heading">Роверы — главный источник позитива</div>
         <div class="insight-text">
-          10 постов, самая частая тема среза. Бабушки помогают роверу залезть на бордюр,
-          мальчик оставляет ему чаевые из копилки, девушка плачет когда ровер уезжает.
-          Иностранцы сравнивают: в России роверам помогают, в США — ломают. Тема объединяет людей.
+          14 постов, 82–98% позитив. Бабушки помогают роверу залезть на бордюр,
+          ребёнок оставляет чаевые из копилки, девушка плачет когда ровер уезжает.
+          Иностранцы снимают контраст: в России роверам помогают, в США — ломают.
+          Суммарный охват темы — более 20M просмотров.
         </div>
-        <span class="insight-stat orange">10 постов · 82–98% позитив</span>
+        <span class="insight-tag tag-orange">14 постов · 82–98% позитив</span>
       </div>
       <div class="insight">
         <div class="insight-icon">🚕</div>
         <div class="insight-heading">Яндекс Go — неожиданные моменты в поездке</div>
         <div class="insight-text">
-          6 постов с высоким охватом. Водитель загадывает загадку и дарит чупа-чупсы,
-          парень генерит песню про таксиста прямо в поездке, девушка снимает милый диалог про шарик.
-          Pet-friendly тариф вызвал лавину благодарностей. Личные истории работают лучше всего.
+          8 постов. Водитель загадывает загадку и дарит чупа-чупсы, парень генерит
+          песню про таксиста прямо в поездке, глухонемой водитель вызывает волну тепла,
+          pet-friendly тариф благодарят за доброту к животным.
+          Личные истории из такси работают лучше любой рекламы.
         </div>
-        <span class="insight-stat green">6 постов · до 2.7M просмотров</span>
+        <span class="insight-tag tag-green">8 постов · до 5.7M просмотров</span>
       </div>
       <div class="insight">
         <div class="insight-icon">🔊</div>
         <div class="insight-heading">Алиса и Браузер — вирусные открытия</div>
         <div class="insight-text">
-          Алиса убаюкивает котёнка, помогает бабушке с деменцией, крепится к стене —
-          каждый ролик запускает волну личных историй в комментах.
+          Алиса убаюкивает котёнка, помогает бабушке с деменцией не быть одной,
+          крепится к стене — каждый ролик запускает цепочку личных историй в комментах.
           Пасхалки Браузера (Пухосос, игра «любит не любит») стабильно вирусятся —
-          97% позитив в комментариях.
+          комменты от «Я ещё не наигралась» до «Моя Алиса разговаривает с вашей».
         </div>
-        <span class="insight-stat blue">6 постов · 90–97% позитив</span>
+        <span class="insight-tag tag-blue">7 постов · 90–97% позитив</span>
       </div>
     </div>
   </div>
 
-  <div class="two-col">
+  <!-- Бар чарт -->
+  <div class="section-label">Распределение по темам</div>
+  <div class="two-col mb20">
     <div class="card">
-      <div class="card-title">Распределение по темам</div>
+      <div class="card-title">Количество постов по темам</div>
       <div style="height:290px;position:relative"><canvas id="themesChart"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title">О чём пишут в комментариях</div>
-      <div class="wordcloud" id="wc"></div>
+      <div class="card-title">Тональность комментариев</div>
+      <div style="height:290px;position:relative"><canvas id="sentChart"></canvas></div>
     </div>
   </div>
 
-  <div class="card full-col">
-    <div class="card-title">Топ постов по охвату</div>
+  <!-- Текстовая сводка по темам -->
+  <div class="section-label">Разбор по темам</div>
+  <div class="card mb20">
+    <div id="theme-breakdown"></div>
+  </div>
+
+  <!-- Комментарии -->
+  <div class="section-label">Лучшие комментарии</div>
+  <div class="comments-list mb20" id="comments-list"></div>
+
+  <!-- Топ постов -->
+  <div class="section-label">Топ постов по охвату</div>
+  <div class="card mb20">
     <table class="posts-table">
       <thead><tr>
         <th>Автор</th><th>Кейс</th><th>Просмотры</th><th>Лайки</th><th>Тональность</th><th>Ссылка</th>
@@ -234,7 +274,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 </div>
 
-<!-- ══════════ НЕГАТИВ ══════════ -->
+<!-- НЕГАТИВ -->
 <div id="page-neg" class="page">
   <div class="empty">
     <div class="empty-icon">📊</div>
@@ -244,80 +284,201 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 </div>
 
 <footer class="footer">
-  Обновлено 03.08.2026 ·
+  Обновлено август 2026 ·
   <a href="https://docs.google.com/spreadsheets/d/1e9G5uRMy7tJjDA-ei_sopeaywB-ZUBvNM3whV7v6_AU" target="_blank">Полная таблица Google Sheets</a>
 </footer>
 
 <script>
+// ── Данные ────────────────────────────────────────────────────────────────────
 const THEMES = [
-  ["Ровер / робот-доставщик", 10],
-  ["Яндекс Go — такси", 6],
+  ["Ровер / робот-доставщик", 14],
+  ["Яндекс Go — такси", 8],
+  ["Яндекс Браузер", 4],
   ["Яндекс Музыка", 3],
-  ["Яндекс Браузер", 3],
   ["Яндекс Карты", 3],
   ["Яндекс Алиса", 3],
+  ["Яндекс Еда", 2],
   ["Яндекс — инклюзивность", 1],
-  ["Яндекс Мессенджер", 1],
   ["Яндекс Маркет", 1],
 ];
 
-const WORDS = [
-  ["алиса", 8], ["спасибо", 5], ["Яндекс", 4], ["работает", 4],
-  ["песни", 4], ["слушаю", 4], ["кометы", 4], ["хорошо", 3],
-  ["талант", 3], ["чудесный", 3], ["проверять", 3], ["круто", 2],
-  ["офигеть", 2], ["красиво", 2], ["момент", 2], ["роботы", 2],
-  ["мило", 2], ["доброта", 2], ["доставка", 2], ["музыка", 2],
+const THEME_DETAILS = [
+  {
+    name: "🤖 Ровер / робот-доставщик",
+    count: 14,
+    tonal: "82–98% позитив",
+    points: [
+      "Самая частая тема — 14 постов, суммарный охват более 20M просмотров",
+      "Люди антропоморфизируют роверов: «Искренне кажется, что у них есть душа» (@vlastify)",
+      "Контент с помощью роверам (бордюр, снег) собирает 80–98% позитива — тема объединяет",
+      "Сравнение Россия vs США вирусится среди иностранной аудитории (6M + 2.6M просмотров)",
+      "Даже сборка игрушки-ровера привлекла внимание Яндекса и вызвала волну одобрения",
+    ]
+  },
+  {
+    name: "🚕 Яндекс Go — такси",
+    count: 8,
+    tonal: "68–96% позитив",
+    points: [
+      "8 постов, самые охватные после роверов — до 5.7M просмотров",
+      "Сюжет «неожиданная доброта водителя» работает стабильно: чупа-чупсы, песня, диалог",
+      "Глухонемой водитель вызвал волну трогательных комментариев про эмпатию",
+      "Pet-friendly тариф: «Часто вижу жалобы, а мне захотелось сказать спасибо»",
+      "Тональность варьируется — ролик с нейросетью имеет 22% позитив (аудитория неоднозначна)",
+    ]
+  },
+  {
+    name: "🎵 Яндекс Музыка",
+    count: 3,
+    tonal: "77–97% позитив",
+    points: [
+      "Проект «Искра» — артисты благодарят сервис за продвижение на билбордах Москвы",
+      "Контент строится на личной истории: «моя мечта исполнилась благодаря Яндекс Музыке»",
+      "Комменты от фанатов — живые, личные, эмоциональные. 77–97% позитив",
+    ]
+  },
+  {
+    name: "🌐 Яндекс Браузер",
+    count: 4,
+    tonal: "77–93% позитив",
+    points: [
+      "Пасхалки (Пухосос, игры) стабильно вирусятся — kate_krygina набрала 2.2M просмотров",
+      "Аудитория делится пасхалками в комментах, генерируя новые волны охвата",
+      "«Я ещё не наигралась в пух тополя» — люди возвращаются к фиче снова",
+    ]
+  },
+  {
+    name: "🔊 Яндекс Алиса",
+    count: 3,
+    tonal: "82–97% позитив",
+    points: [
+      "Алиса убаюкивает котёнка — 97% позитив, один из самых тёплых роликов среза",
+      "Алиса как компаньон для бабушки с деменцией собрала 2.8M просмотров",
+      "Аудитория делится своими историями про Алису: «Моя Алиса с вашей разговаривала»",
+    ]
+  },
+  {
+    name: "🗺️ Яндекс Карты",
+    count: 3,
+    tonal: "100% позитив",
+    points: [
+      "Все три поста — бизнесы, получившие награды «Хорошее место» и «Особенно хорошее место»",
+      "100% позитив: бизнесы воспринимают награду как знак качества и источник мотивации",
+      "Формат работает как бесплатный PR для Яндекс Карт — бизнесы сами делают контент",
+    ]
+  },
+  {
+    name: "🍱 Яндекс Еда",
+    count: 2,
+    tonal: "75–85% позитив",
+    points: [
+      "Курьер спел с уличным музыкантом (@holod.media, 3.4M просмотров) — история про мечту",
+      "16-летний подросток стал курьером — история взросления и самостоятельности",
+    ]
+  },
+];
+
+const COMMENTS = [
+  { quote: "Искренне кажется, что у них есть душа — всегда улыбаюсь им и мне кажется, что они улыбаются в ответ", author: "vlastify", theme: "Ровер / робот-доставщик" },
+  { quote: "Какой диалог прикольный получился 🥹😍 Вы прелестная, и таксист тоже клевый!", author: "lara__vo__", theme: "Яндекс Go — такси" },
+  { quote: "Какая милота! Лучик нашёл для себя самый уютный уголок для снов — рядом с Алисой", author: "lera_valeriaaa", theme: "Яндекс Алиса" },
+  { quote: "Вот так за одну ночь пока ты спишь может исполнится твоя мечта ✨💫", author: "holod.media", theme: "Яндекс Еда" },
+  { quote: "Я еще не наигралась в пух тополя", author: "ahma_diva", theme: "Яндекс Браузер" },
+  { quote: "Мое советское воспитание: не бей куколку, ей больно. Я сейчас: робота бьют", author: "la_capital_de_oro", theme: "Ровер / робот-доставщик" },
 ];
 
 const TOP_POSTS = [
-  { a:"berisvoye",        v:5900000, l:21236,  th:"Девушка помогает роверу выбраться из снега",       p:"80%", url:"https://www.instagram.com/reel/DV1CNWcDOp8/" },
-  { a:"lara__vo__",       v:3646708, l:148843, th:"Приятная поездка и милый диалог с таксистом",      p:"68%", url:"https://www.instagram.com/reel/DZXPfBvs5VP/" },
-  { a:"hosti_music_",     v:2736023, l:263481, th:"Парень генерит песню про таксиста прямо в поездке", p:"22%", url:"https://www.instagram.com/reel/DZa4izToELF/" },
-  { a:"new__kuzya",       v:1833566, l:130231, th:"Алиса помогает бабушке с деменцией",               p:"90%", url:"https://www.instagram.com/reel/DXeosQODVMD/" },
-  { a:"kate_krygina",     v:1369187, l:28798,  th:"Пухосос в Яндекс Браузере",                        p:"77%", url:"https://www.instagram.com/reel/DZZeov6u9dL/" },
-  { a:"druzhinina_nail",  v:1400000, l:45190,  th:"Ребёнок оставил чаевые роботу-доставщику",         p:"82%", url:"https://www.instagram.com/reel/DT7s-wvDPlP/" },
-  { a:"britoksasha",      v:1200000, l:62863,  th:"Парень предлагает фичи для Яндекс Мессенджера",    p:"55%", url:"https://www.instagram.com/reel/DUIJ1x4iAXY/" },
-  { a:"almira.rabatovna", v:676926,  l:59967,  th:"Водитель в такси загадал загадку и дал чупа-чупсы", p:"92%", url:"https://www.instagram.com/reel/DZ9tqNKoH9p/" },
-  { a:"vlastify",         v:514933,  l:284404, th:"Роверы: Россия помогает, США — ломают",             p:"78%", url:"https://www.instagram.com/reel/Da0MciUMRND/" },
-  { a:"lera_valeriaaa",   v:0,       l:0,      th:"Колонка Алиса убаюкивает котёнка",                  p:"97%", url:"https://www.instagram.com/reel/DavsIY7RYIf/" },
+  { a:"la_capital_de_oro", v:"6.0M", l:"—",      th:"Роверы: Россия vs США (испанский блогер)",      p:"72%", url:"https://www.instagram.com/reel/DayOuCOK6G-/" },
+  { a:"berisvoye",         v:"5.9M", l:"21 236",  th:"Девушка помогает роверу выбраться из снега",    p:"80%", url:"https://www.instagram.com/reel/DV1CNWcDOp8/" },
+  { a:"lara__vo__",        v:"5.7M", l:"148 843", th:"Приятная поездка и милый диалог с таксистом",   p:"68%", url:"https://www.instagram.com/reel/DZXPfBvs5VP/" },
+  { a:"hosti_music_",      v:"4.5M", l:"263 481", th:"Парень генерит песню про таксиста в поездке",   p:"22%", url:"https://www.instagram.com/reel/DZa4izToELF/" },
+  { a:"holod.media",       v:"3.4M", l:"321 771", th:"Курьер Яндекс Еды спел с уличным музыкантом",   p:"75%", url:"https://www.instagram.com/reel/DbXs3ESt-z2/" },
+  { a:"new_kuzya",         v:"2.8M", l:"130 231", th:"Алиса помогает бабушке с деменцией",             p:"90%", url:"https://www.instagram.com/reel/DXeosQODVMD/" },
+  { a:"vlastify",          v:"2.6M", l:"284 404", th:"Роверы: Россия vs США",                          p:"78%", url:"https://www.instagram.com/reel/Da0MciUMRND/" },
+  { a:"kate_krygina",      v:"2.2M", l:"28 798",  th:"Пухосос в Яндекс Браузере",                     p:"77%", url:"https://www.instagram.com/reel/DZZeov6u9dL/" },
+  { a:"katerina.vik_",     v:"1.9M", l:"—",       th:"Поездка в Яндекс Go",                            p:"85%", url:"https://www.instagram.com/reel/DbXmczcI0Cb/" },
+  { a:"druzhinina_nail",   v:"1.4M", l:"45 190",  th:"Ребёнок оставил чаевые роботу-доставщику",      p:"82%", url:"https://www.instagram.com/reel/DT7s-wvDPlP/" },
 ];
 
-const PAL = ['#ff3b30','#ff9f0a','#30d158','#007aff','#5856d6','#ff2d55','#ac8e68','#34c759','#5ac8fa','#af52de'];
+const PAL = ['#ff3b30','#ff9f0a','#30d158','#007aff','#5856d6','#ff2d55','#ac8e68','#34c759','#5ac8fa'];
 
+// ── Tabs ─────────────────────────────────────────────────────────────────────
 function go(t) {
   document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['pos','neg'][i]===t));
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+t).classList.add('active');
 }
 
-// Bar chart
-new Chart(document.getElementById('themesChart'),{
-  type:'bar',
-  data:{labels:THEMES.map(t=>t[0]),datasets:[{data:THEMES.map(t=>t[1]),backgroundColor:PAL,borderRadius:6,borderSkipped:false}]},
-  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.raw+' постов'}}},
-    scales:{x:{grid:{color:'#f2f2f7'},ticks:{stepSize:1}},y:{grid:{display:false},ticks:{font:{size:12}}}}}
+// ── Bar chart ─────────────────────────────────────────────────────────────────
+new Chart(document.getElementById('themesChart'), {
+  type: 'bar',
+  data: {
+    labels: THEMES.map(t=>t[0]),
+    datasets: [{ data: THEMES.map(t=>t[1]), backgroundColor: PAL, borderRadius: 6, borderSkipped: false }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.raw + ' постов' } } },
+    scales: {
+      x: { grid: { color: '#f2f2f7' }, ticks: { stepSize: 1 } },
+      y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+    }
+  }
 });
 
-// Word cloud
-const wc = document.getElementById('wc');
-const max = WORDS[0][1];
-WORDS.forEach(([w,cnt])=>{
-  const r = cnt/max;
-  const s = r>.8?5:r>.6?4:r>.4?3:r>.25?2:1;
-  wc.innerHTML += `<span class="word s${s}">${w}</span>`;
+// ── Doughnut ──────────────────────────────────────────────────────────────────
+new Chart(document.getElementById('sentChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Позитив', 'Нейтрал', 'Негатив'],
+    datasets: [{ data: [83, 12, 5], backgroundColor: ['#30d158','#ffcc00','#ff3b30'], borderWidth: 0, hoverOffset: 8 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '65%',
+    plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 13 }, usePointStyle: true } } }
+  }
 });
 
-// Table
+// ── Theme breakdown ───────────────────────────────────────────────────────────
+const breakdown = document.getElementById('theme-breakdown');
+THEME_DETAILS.forEach((t, i) => {
+  const color = PAL[i] || '#636366';
+  breakdown.innerHTML += `
+    <div class="theme-section">
+      <div class="theme-name" style="color:${color}">
+        ${t.name}
+        <span class="theme-count">${t.count} постов</span>
+        <span class="theme-count">${t.tonal}</span>
+      </div>
+      <ul class="theme-bullets">
+        ${t.points.map(p=>`<li>${p}</li>`).join('')}
+      </ul>
+    </div>`;
+});
+
+// ── Comments ─────────────────────────────────────────────────────────────────
+const cl = document.getElementById('comments-list');
+COMMENTS.forEach(c => {
+  cl.innerHTML += `
+    <div class="comment-card">
+      <div class="comment-quote">«${c.quote}»</div>
+      <div class="comment-meta">
+        @${c.author}
+        <span class="comment-badge">${c.theme}</span>
+      </div>
+    </div>`;
+});
+
+// ── Table ─────────────────────────────────────────────────────────────────────
 const tb = document.getElementById('posts-body');
-TOP_POSTS.forEach(p=>{
-  const fv=v=>v>=1e6?(v/1e6).toFixed(1)+'M':(v/1e3).toFixed(0)+'K';
-  tb.innerHTML+=`<tr>
+TOP_POSTS.forEach(p => {
+  const posClass = parseInt(p.p) >= 70 ? 'pos' : parseInt(p.p) >= 40 ? '' : 'neg';
+  tb.innerHTML += `<tr>
     <td><strong>@${p.a}</strong></td>
     <td><span class="badge">${p.th}</span></td>
-    <td class="num">${fv(p.v)}</td>
-    <td class="num">${fv(p.l)}</td>
-    <td class="pos">${p.p}</td>
+    <td class="num">${p.v}</td>
+    <td class="num">${p.l}</td>
+    <td class="${posClass}">${p.p}</td>
     <td><a class="link" href="${p.url}" target="_blank">Открыть →</a></td>
   </tr>`;
 });
